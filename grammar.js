@@ -11,6 +11,81 @@ module.exports = grammar({
   name: "flex",
 
   rules: {
-    source_file: $ => "hello"
+    source_file: $ => seq(
+      $.section1,
+      $.section2,
+      $._space,
+      optional(alias($.trailing_code, $.embedded_code)),
+    ),
+
+    _whitespace: _ => /[ \t\r\v\f]+/,
+    _newline: _ => /\n/,
+    _space: _ => /\s+/,
+
+    identifier: _ => /\p{XID_Start}\p{XID_Continue}*/,
+
+    section1: $ => seq(
+      optional($._space),
+      optional($.prologue),
+      optional($._space),
+      repeat($.alias),
+      optional($._whitespace),
+      "%%",
+    ),
+
+    prologue: $ => seq(
+      "%{",
+      alias($.prologue_body, $.embedded_code),
+      "%}"
+    ),
+
+    prologue_body: _ => token(/([^%]|%[^}])+/),
+
+    line_comment: $ => seq("//", token(/[^\n]+/), $._newline),
+    block_comment: $ => seq("/*", token(/([^*]|\*[^/])+/)),
+    _comment: $ => choice($.line_comment, $.block_comment),
+
+    alias: $ => seq(
+      optional($._whitespace),
+      $.identifier,
+      optional($._whitespace),
+      $.rule,
+      $._space,
+    ),
+
+    rule: _ => /\S+/,
+
+    string: _ => seq(
+      '"',
+      token(/[^"]+/),
+      '"'
+    ),
+
+    embedded_code: _ => seq(
+      '{',
+      // TODO: allow { in code blocks if balanced
+      token(/[^}]+/),
+      '}'
+    ),
+
+    declaration: $ => seq(
+      choice(
+        $.string,
+        $.rule,
+      ),
+      optional($._whitespace),
+      optional($.embedded_code),
+      optional($._comment),
+      optional($._newline),
+    ),
+
+    section2: $ => seq(
+      optional($._space),
+      repeat($.declaration),
+      optional($._space),
+      "%%",
+    ),
+
+    trailing_code: _ => /(.|\n)+/,
   }
 });

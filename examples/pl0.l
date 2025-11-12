@@ -6,6 +6,7 @@ digit         [0-9]
 letter        [a-zA-Z]
 
 %%
+
 "+"                  { return PLUS;       }
 "-"                  { return MINUS;      }
 "*"                  { return TIMES;      }
