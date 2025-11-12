@@ -8,7 +8,15 @@
       "required": true,
       "types": [
         {
+          "type": "block_comment",
+          "named": true
+        },
+        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "line_comment",
           "named": true
         },
         {
@@ -156,6 +164,10 @@
   },
   {
     "type": "%}",
+    "named": false
+  },
+  {
+    "type": "*/",
     "named": false
   },
   {

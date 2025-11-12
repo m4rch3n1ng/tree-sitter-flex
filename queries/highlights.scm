@@ -1,5 +1,8 @@
 (alias (identifier) @constant)
 
+(alias (identifier) @keyword.directive
+  (#match? @keyword.directive "^%"))
+
 (rule) @constant.numeric
 (string) @string
 

@@ -50,7 +50,7 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "\\p{XID_Start}\\p{XID_Continue}*"
+      "value": "(\\p{XID_Start}|%)\\p{XID_Continue}*"
     },
     "section1": {
       "type": "SEQ",
@@ -178,6 +178,10 @@
             "type": "PATTERN",
             "value": "([^*]|\\*[^/])+"
           }
+        },
+        {
+          "type": "STRING",
+          "value": "*/"
         }
       ]
     },
@@ -230,6 +234,30 @@
           "name": "rule"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_whitespace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_comment"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "SYMBOL",
           "name": "_space"
         }
@@ -237,7 +265,7 @@
     },
     "rule": {
       "type": "PATTERN",
-      "value": "\\S+"
+      "value": "\\S+?"
     },
     "string": {
       "type": "SEQ",
