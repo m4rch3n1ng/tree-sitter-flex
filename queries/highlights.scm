@@ -6,5 +6,14 @@
 (rule) @constant.numeric
 (string) @string
 
+[
+  "%{"
+  "%}"
+  "{"
+  "}"
+] @punctuation.bracket
+
+"%%" @punctuation.delimiter
+
 (line_comment) @comment
 (block_comment) @comment
