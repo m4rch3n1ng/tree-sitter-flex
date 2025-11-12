@@ -14,8 +14,16 @@
           "name": "section2"
         },
         {
-          "type": "SYMBOL",
-          "name": "_space"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_space"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",
@@ -265,7 +273,7 @@
     },
     "rule": {
       "type": "PATTERN",
-      "value": "\\S+?"
+      "value": "[^\"]\\S*?"
     },
     "string": {
       "type": "SEQ",

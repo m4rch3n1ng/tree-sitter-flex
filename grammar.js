@@ -14,7 +14,7 @@ module.exports = grammar({
     source_file: $ => seq(
       $.section1,
       $.section2,
-      $._space,
+      optional($._space),
       optional(alias($.trailing_code, $.embedded_code)),
     ),
 
@@ -55,7 +55,7 @@ module.exports = grammar({
       $._space,
     ),
 
-    rule: _ => /\S+?/,
+    rule: _ => /[^"]\S*?/,
 
     string: _ => seq(
       '"',
