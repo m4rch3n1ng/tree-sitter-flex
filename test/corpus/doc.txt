@@ -1,0 +1,56 @@
+========
+basic
+========
+
+%%
+
+%option noyywrap
+
+digit   [0-9]
+
+%%
+
+%%
+
+--------
+
+(source_file
+  (section1)
+  (section2
+    (declaration
+      (rule))
+    (declaration
+      (rule))
+    (declaration
+      (rule))
+    (declaration
+      (rule)))
+  (embedded_code))
+
+========
+comments
+========
+
+%%
+
+%p 6000 /* set positions to 6000 */
+
+%%
+
+"+"                  { return PLUS;       }
+"-"                  { return MINUS;      }
+[ \t\n\r]            /* skip whitespace */
+
+%%
+
+--------
+
+(source_file
+  (section1)
+  (section2
+    (declaration
+      (rule))
+    (declaration
+      (rule)
+      (block_comment)))
+  (embedded_code))
