@@ -26,7 +26,21 @@ digit   [0-9]
 comments
 =============
 
+// a line comment
+/*
+  a block comment
+*/
+
+%{
+#include "y.tab.h"
+%}
+
+// more comments
+
 %p 6000 /* set positions to 6000 */
+%option noyywrap
+
+/* even more comments wow */
 
 %%
 
@@ -40,6 +54,15 @@ comments
 
 (source_file
   (section1
+    (line_comment)
+    (block_comment)
+    (prologue
+      (embedded_code))
+    (line_comment)
+    (alias
+      (identifier)
+      (rule))
+    (block_comment)
     (alias
       (identifier)
       (rule))
@@ -61,6 +84,10 @@ comments
 embedded_code
 =============
 
+%{
+#include "y.tab.h"
+%}
+
 %p 6000 /* set positions to 6000 */
 
 %%
@@ -78,6 +105,8 @@ int thing() {
 
 (source_file
   (section1
+    (prologue
+      (embedded_code))
     (alias
       (identifier)
       (rule))

@@ -22,11 +22,12 @@ module.exports = grammar({
     _newline: _ => /\n/,
     _space: _ => /\s+/,
 
-    identifier: _ => /(\p{XID_Start}|%)\p{XID_Continue}*/,
-
-    line_comment: $ => seq("//", token(/[^\n]*/), $._newline),
+    line_comment: _ => seq("//", token(/[^\n]*/)),
     block_comment: _ => seq("/*", token(/([^*]|\*[^/])*/), "*/"),
     _comment: $ => choice($.line_comment, $.block_comment),
+    _comments: $ => repeat1(seq($._comment, $._space)),
+
+    identifier: _ => /(\p{XID_Start}|%)\p{XID_Continue}*/,
 
     prologue: $ => seq(
       "%{",
@@ -45,15 +46,22 @@ module.exports = grammar({
 
     section1: $ => seq(
       optional($._space),
-      optional($.prologue),
-      optional($._space),
-      repeat(seq(
-        $.alias,
-        optional($._whitespace),
-        optional($._comment),
-        $._space,
+      optional($._comments),
+      optional(seq(
+        $.prologue,
+        optional($._space),
+        optional($._comments),
       )),
-      optional($._whitespace),
+      optional(seq(
+        repeat1(seq(
+          $.alias,
+          optional($._whitespace),
+          optional($._comment),
+          $._space,
+        )),
+        optional($._comments),
+      )),
+      optional($._space),
       "%%",
     ),
 

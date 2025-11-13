@@ -1,3 +1,5 @@
+/* example file taken from the wikipedia page for flex */
+
 %{
 #include "y.tab.h"
 %}
