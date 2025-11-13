@@ -8,15 +8,7 @@
       "required": true,
       "types": [
         {
-          "type": "block_comment",
-          "named": true
-        },
-        {
           "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "line_comment",
           "named": true
         },
         {
@@ -97,6 +89,14 @@
       "types": [
         {
           "type": "alias",
+          "named": true
+        },
+        {
+          "type": "block_comment",
+          "named": true
+        },
+        {
+          "type": "line_comment",
           "named": true
         },
         {

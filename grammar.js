@@ -24,14 +24,9 @@ module.exports = grammar({
 
     identifier: _ => /(\p{XID_Start}|%)\p{XID_Continue}*/,
 
-    section1: $ => seq(
-      optional($._space),
-      optional($.prologue),
-      optional($._space),
-      repeat($.alias),
-      optional($._whitespace),
-      "%%",
-    ),
+    line_comment: $ => seq("//", token(/[^\n]+/), $._newline),
+    block_comment: _ => seq("/*", token(/([^*]|\*[^/])+/), "*/"),
+    _comment: $ => choice($.line_comment, $.block_comment),
 
     prologue: $ => seq(
       "%{",
@@ -41,18 +36,25 @@ module.exports = grammar({
 
     prologue_body: _ => token(/([^%]|%[^}])+/),
 
-    line_comment: $ => seq("//", token(/[^\n]+/), $._newline),
-    block_comment: $ => seq("/*", token(/([^*]|\*[^/])+/), "*/"),
-    _comment: $ => choice($.line_comment, $.block_comment),
-
     alias: $ => seq(
       optional($._whitespace),
       $.identifier,
       optional($._whitespace),
       $.rule,
+    ),
+
+    section1: $ => seq(
+      optional($._space),
+      optional($.prologue),
+      optional($._space),
+      repeat(seq(
+        $.alias,
+        optional($._whitespace),
+        optional($._comment),
+        $._space,
+      )),
       optional($._whitespace),
-      optional($._comment),
-      $._space,
+      "%%",
     ),
 
     rule: _ => /[^"]\S*?/,

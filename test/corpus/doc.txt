@@ -1,8 +1,6 @@
-========
+=============
 basic
-========
-
-%%
+=============
 
 %option noyywrap
 
@@ -12,26 +10,21 @@ digit   [0-9]
 
 %%
 
---------
+-------------
 
 (source_file
-  (section1)
-  (section2
-    (declaration
+  (section1
+    (alias
+      (identifier)
       (rule))
-    (declaration
-      (rule))
-    (declaration
-      (rule))
-    (declaration
+    (alias
+      (identifier)
       (rule)))
-  (embedded_code))
+  (section2))
 
-========
+=============
 comments
-========
-
-%%
+=============
 
 %p 6000 /* set positions to 6000 */
 
@@ -43,14 +36,48 @@ comments
 
 %%
 
---------
+-------------
 
 (source_file
-  (section1)
+  (section1
+    (alias
+      (identifier)
+      (rule))
+    (block_comment))
   (section2
+    (declaration
+      (string)
+      (embedded_code))
+    (declaration
+      (string)
+      (embedded_code))
     (declaration
       (rule))
     (declaration
       (rule)
-      (block_comment)))
-  (embedded_code))
+      (block_comment))))
+
+=============
+embedded_code
+=============
+
+%p 6000 /* set positions to 6000 */
+
+%%
+
+"+"                  { return PLUS;       }
+
+%%
+
+-------------
+
+(source_file
+  (section1
+    (alias
+      (identifier)
+      (rule))
+    (block_comment))
+  (section2
+    (declaration
+      (string)
+      (embedded_code))))
