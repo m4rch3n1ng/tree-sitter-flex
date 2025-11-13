@@ -24,8 +24,8 @@ module.exports = grammar({
 
     identifier: _ => /(\p{XID_Start}|%)\p{XID_Continue}*/,
 
-    line_comment: $ => seq("//", token(/[^\n]+/), $._newline),
-    block_comment: _ => seq("/*", token(/([^*]|\*[^/])+/), "*/"),
+    line_comment: $ => seq("//", token(/[^\n]*/), $._newline),
+    block_comment: _ => seq("/*", token(/([^*]|\*[^/])*/), "*/"),
     _comment: $ => choice($.line_comment, $.block_comment),
 
     prologue: $ => seq(
@@ -34,7 +34,7 @@ module.exports = grammar({
       "%}"
     ),
 
-    prologue_body: _ => token(/([^%]|%[^}])+/),
+    prologue_body: _ => token(/([^%]|%[^}])*/),
 
     alias: $ => seq(
       optional($._whitespace),
@@ -61,14 +61,14 @@ module.exports = grammar({
 
     string: _ => seq(
       '"',
-      token(/[^"]+/),
+      token(/[^"]*/),
       '"'
     ),
 
     embedded_code: _ => seq(
       '{',
       // TODO: allow { in code blocks if balanced
-      token(/[^}]+/),
+      token(/[^}]*/),
       '}'
     ),
 

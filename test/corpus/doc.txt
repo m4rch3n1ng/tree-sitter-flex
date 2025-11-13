@@ -65,9 +65,14 @@ embedded_code
 
 %%
 
+""                   { return THE_VOID;   }
 "+"                  { return PLUS;       }
 
 %%
+
+int thing() {
+    return true;
+}
 
 -------------
 
@@ -80,4 +85,8 @@ embedded_code
   (section2
     (declaration
       (string)
-      (embedded_code))))
+      (embedded_code))
+    (declaration
+      (string)
+      (embedded_code)))
+  (embedded_code))
