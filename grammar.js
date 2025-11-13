@@ -1,5 +1,5 @@
 /**
- * @file a tree-sitter grammar for gnu flex
+ * @file a tree-sitter grammar for flex
  * @author may
  * @license MIT
  */

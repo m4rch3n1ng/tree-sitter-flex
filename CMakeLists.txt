@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-flex
         VERSION "0.1.0"
-        DESCRIPTION "a tree-sitter grammar for gnu flex"
+        DESCRIPTION "a tree-sitter grammar for flex"
         HOMEPAGE_URL "https://github.com/m4rh3n1ng/flex"
         LANGUAGES C)
 

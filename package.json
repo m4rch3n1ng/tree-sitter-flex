@@ -1,7 +1,7 @@
 {
   "name": "tree-sitter-flex",
   "version": "0.1.0",
-  "description": "a tree-sitter grammar for gnu flex",
+  "description": "a tree-sitter grammar for flex",
   "repository": "https://github.com/m4rh3n1ng/flex",
   "license": "MIT",
   "author": {

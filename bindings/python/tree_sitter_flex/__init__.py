@@ -1,4 +1,4 @@
-"""a tree-sitter grammar for gnu flex"""
+"""a tree-sitter grammar for flex"""
 
 from importlib.resources import files as _files
 

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tree-sitter-flex"
-description = "a tree-sitter grammar for gnu flex"
+description = "a tree-sitter grammar for flex"
 version = "0.1.0"
 keywords = ["incremental", "parsing", "tree-sitter", "flex"]
 classifiers = [

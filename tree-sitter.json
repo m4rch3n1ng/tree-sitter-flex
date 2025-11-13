@@ -16,7 +16,7 @@
   "metadata": {
     "version": "0.1.0",
     "license": "MIT",
-    "description": "a tree-sitter grammar for gnu flex",
+    "description": "a tree-sitter grammar for flex",
     "authors": [
       {
         "name": "may"
