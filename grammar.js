@@ -63,11 +63,17 @@ module.exports = grammar({
       "%%",
     ),
 
-    rule: _ => /[^"]\S*?/,
+    rule: _ => /[^<"]\S*?/,
+
+    state: $ => seq(
+      "<",
+      $.identifier,
+      ">"
+    ),
 
     string: _ => seq(
       '"',
-      token(/[^"]*/),
+      token(/[^"\n]*/),
       '"'
     ),
 
@@ -79,6 +85,7 @@ module.exports = grammar({
     ),
 
     declaration: $ => seq(
+      optional($.state),
       choice(
         $.string,
         $.rule,

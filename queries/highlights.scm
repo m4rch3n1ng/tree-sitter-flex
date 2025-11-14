@@ -1,4 +1,6 @@
-(alias (identifier) @constant)
+(alias (identifier) @variable)
+
+(state (identifier) @constant)
 
 (alias (identifier) @keyword.directive
   (#match? @keyword.directive "^%"))

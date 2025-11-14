@@ -323,7 +323,24 @@
     },
     "rule": {
       "type": "PATTERN",
-      "value": "[^\"]\\S*?"
+      "value": "[^<\"]\\S*?"
+    },
+    "state": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
     },
     "string": {
       "type": "SEQ",
@@ -336,7 +353,7 @@
           "type": "TOKEN",
           "content": {
             "type": "PATTERN",
-            "value": "[^\"]*"
+            "value": "[^\"\\n]*"
           }
         },
         {
@@ -368,6 +385,18 @@
     "declaration": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "state"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "CHOICE",
           "members": [
