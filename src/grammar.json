@@ -56,23 +56,7 @@
       "type": "PATTERN",
       "value": "\\s+"
     },
-    "line_comment": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "//"
-        },
-        {
-          "type": "TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[^\\n]*"
-          }
-        }
-      ]
-    },
-    "block_comment": {
+    "comment": {
       "type": "SEQ",
       "members": [
         {
@@ -80,28 +64,23 @@
           "value": "/*"
         },
         {
-          "type": "TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "([^*]|\\*[^/])*"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PATTERN",
+                "value": "([^*]|\\*[^/])+"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "STRING",
           "value": "*/"
-        }
-      ]
-    },
-    "_comment": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "line_comment"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "block_comment"
         }
       ]
     },
@@ -112,7 +91,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_comment"
+            "name": "comment"
           },
           {
             "type": "SYMBOL",
@@ -291,7 +270,7 @@
                         "members": [
                           {
                             "type": "SYMBOL",
-                            "name": "_comment"
+                            "name": "comment"
                           },
                           {
                             "type": "BLANK"
@@ -431,7 +410,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_comment"
+              "name": "comment"
             },
             {
               "type": "BLANK"

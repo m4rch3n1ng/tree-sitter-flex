@@ -26,16 +26,11 @@ digit   [0-9]
 comments
 =============
 
-// a line comment
-/*
-  a block comment
-*/
+/* a comment */
 
 %{
 #include "y.tab.h"
 %}
-
-// more comments
 
 %p 6000 /* set positions to 6000 */
 %option noyywrap
@@ -46,7 +41,8 @@ comments
 
 "+"                  { return PLUS;       }
 "-"                  { return MINUS;      }
-[ \t\n\r]            /* skip whitespace */
+\n                   /* more stuff */
+[ \t\r]              /* skip whitespace */
 
 %%
 
@@ -54,19 +50,17 @@ comments
 
 (source_file
   (section1
-    (line_comment)
-    (block_comment)
+    (comment)
     (prologue
       (embedded_code))
-    (line_comment)
     (alias
       (identifier)
       (rule))
-    (block_comment)
+    (comment)
     (alias
       (identifier)
       (rule))
-    (block_comment))
+    (comment))
   (section2
     (declaration
       (string)
@@ -75,10 +69,13 @@ comments
       (string)
       (embedded_code))
     (declaration
+      (rule)
+      (comment))
+    (declaration
       (rule))
     (declaration
       (rule)
-      (block_comment))))
+      (comment))))
 
 =============
 embedded_code
@@ -110,7 +107,7 @@ int thing() {
     (alias
       (identifier)
       (rule))
-    (block_comment))
+    (comment))
   (section2
     (declaration
       (string)
