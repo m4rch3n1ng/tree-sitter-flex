@@ -23,6 +23,79 @@ digit   [0-9]
   (section2))
 
 ==================
+comments
+==================
+
+/* a comment */
+
+%{
+#include "y.tab.h"
+%}
+
+%p /* one */ /* two */ 6000 /* set positions to 6000 */
+/* another comment */
+%option noyywrap 
+
+/* even more comments wow */
+
+%%
+
+"+"      /* + */ /* + */  { return PLUS;    } /* + */
+"-"      /* - */          { return MINUS;   } /* - */ /* + */
+"//".+                    { return COMMENT; }
+
+\n
+[ \t\r]                   /* skip whitespace */
+
+%%
+
+------------------
+
+(source_file
+  (section1
+    (comment)
+    (prologue
+      (embedded_code))
+    (alias
+      (identifier)
+      (comment)
+      (comment)
+      (rule))
+    (comment)
+    (comment)
+    (alias
+      (identifier)
+      (rule))
+    (comment))
+  (section2
+    (declaration
+      (rule
+        (string))
+      (comment)
+      (comment)
+      (embedded_code)
+      (comment))
+    (declaration
+      (rule
+        (string))
+      (comment)
+      (embedded_code)
+      (comment)
+      (comment))
+    (declaration
+      (rule
+        (string))
+      (embedded_code))
+    (declaration
+      (rule
+        (escaped)))
+    (declaration
+      (rule
+        (escaped)
+        (escaped))
+      (comment))))
+
+==================
 embedded_code
 ==================
 

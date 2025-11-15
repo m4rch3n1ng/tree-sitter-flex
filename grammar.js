@@ -24,6 +24,7 @@ module.exports = grammar({
 
     comment: _ => seq("/*", optional(token(/([^*]|\*[^/])+/)), "*/"),
     _comments: $ => repeat1(seq($.comment, $._space)),
+    _inline_comments: $ => repeat1(seq($.comment, optional($._whitespace))),
 
     identifier: _ => /(\p{XID_Start}|%)\p{XID_Continue}*/,
 
@@ -36,9 +37,9 @@ module.exports = grammar({
     prologue_body: _ => token(/([^%]|%[^}])*/),
 
     alias: $ => seq(
-      optional($._whitespace),
       $.identifier,
       optional($._whitespace),
+      optional($._inline_comments),
       $.rule,
     ),
 
@@ -50,16 +51,14 @@ module.exports = grammar({
         optional($._space),
         optional($._comments),
       )),
-      optional(seq(
-        repeat1(seq(
+      repeat(seq(
           $.alias,
           optional($._whitespace),
-          optional($.comment),
-          $._space,
-        )),
-        optional($._comments),
+          optional($._inline_comments),
+          $._newline,
+          optional($._space),
+          optional($._comments),
       )),
-      optional($._space),
       "%%",
     ),
 
@@ -75,12 +74,11 @@ module.exports = grammar({
     _rule_token: $ => choice("+", "*", "?", "|", "(", ")", $.escaped, token(/\S/)),
 
     rule: $ => repeat1(choice(
-        $.string,
-        $.interpolation,
-        $._bracketed,
-        $._rule_token,
-      ),
-    ),
+      $.string,
+      $.interpolation,
+      $._bracketed,
+      $._rule_token,
+    )),
 
     state: $ => seq(
       "<",
@@ -104,9 +102,14 @@ module.exports = grammar({
     declaration: $ => seq(
       optional($.state),
       $.rule,
-      $._whitespace,
-      optional($.embedded_code),
-      optional($.comment),
+      optional(seq($._whitespace,
+        optional($._inline_comments),
+        optional(seq(
+          $.embedded_code,
+          optional($._whitespace),
+          optional($._inline_comments),
+        )),
+      )),
       $._newline,
     ),
 
