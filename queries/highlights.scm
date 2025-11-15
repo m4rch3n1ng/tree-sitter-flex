@@ -7,7 +7,7 @@
 
 (rule) @string.regexp
 (rule ["+" "*" "?" "|" "^" "-"] @operator)
-(rule ["[" "]" "{" "}"] @punctuation.bracket)
+(rule ["[" "]" "{" "}" "(" ")"] @punctuation.bracket)
 (rule (escaped) @constant.character.escape)
 (rule (interpolation (identifier) @variable))
 

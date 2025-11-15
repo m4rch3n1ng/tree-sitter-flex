@@ -452,6 +452,14 @@
           "value": "|"
         },
         {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
           "type": "SYMBOL",
           "name": "escaped"
         },
