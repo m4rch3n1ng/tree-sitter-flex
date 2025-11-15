@@ -35,6 +35,10 @@ comments
 %p /* one */ /* two */ 6000 /* set positions to 6000 */
 /* another comment */
 %option noyywrap 
+%set
+
+/* the following is technically not valid, but pretty common while writing */
+digit
 
 /* even more comments wow */
 
@@ -60,12 +64,17 @@ comments
       (identifier)
       (comment)
       (comment)
-      (rule))
-    (comment)
+      (rule)
+      (comment))
     (comment)
     (alias
       (identifier)
       (rule))
+    (alias
+      (identifier))
+    (comment)
+    (alias
+      (identifier))
     (comment))
   (section2
     (declaration
@@ -124,8 +133,8 @@ int thing() {
       (embedded_code))
     (alias
       (identifier)
-      (rule))
-    (comment))
+      (rule)
+      (comment)))
   (section2
     (declaration
       (rule

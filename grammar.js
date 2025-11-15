@@ -40,7 +40,12 @@ module.exports = grammar({
       $.identifier,
       optional($._whitespace),
       optional($._inline_comments),
-      $.rule,
+      optional(seq(
+        $.rule,
+        optional($._whitespace),
+        optional($._inline_comments),
+      )),
+      $._newline,
     ),
 
     section1: $ => seq(
@@ -53,9 +58,6 @@ module.exports = grammar({
       )),
       repeat(seq(
           $.alias,
-          optional($._whitespace),
-          optional($._inline_comments),
-          $._newline,
           optional($._space),
           optional($._comments),
       )),
@@ -102,7 +104,8 @@ module.exports = grammar({
     declaration: $ => seq(
       optional($.state),
       $.rule,
-      optional(seq($._whitespace,
+      optional(seq(
+        $._whitespace,
         optional($._inline_comments),
         optional(seq(
           $.embedded_code,
