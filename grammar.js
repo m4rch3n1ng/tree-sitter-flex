@@ -68,11 +68,13 @@ module.exports = grammar({
     rule: $ => seq(
       choice(
         $._rule_bracket,
-        token(/[^"<\s\[]/)
+        $.string,
+        token(/[^"<\s\[]/),
       ),
       repeat(choice(
-        token(/[^\s\[]/),
+        $.string,
         $._rule_bracket,
+        token(/[^\s\[]/),
       )),
     ),
 
@@ -97,10 +99,7 @@ module.exports = grammar({
 
     declaration: $ => seq(
       optional($.state),
-      choice(
-        $.string,
-        $.rule,
-      ),
+      $.rule,
       optional($._whitespace),
       optional($.embedded_code),
       optional($.comment),

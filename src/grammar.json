@@ -344,6 +344,15 @@
         }
       ]
     },
+    "_rule_token": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "+"
+        }
+      ]
+    },
     "rule": {
       "type": "SEQ",
       "members": [
@@ -353,6 +362,10 @@
             {
               "type": "SYMBOL",
               "name": "_rule_bracket"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "string"
             },
             {
               "type": "TOKEN",
@@ -369,15 +382,19 @@
             "type": "CHOICE",
             "members": [
               {
+                "type": "SYMBOL",
+                "name": "string"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_rule_bracket"
+              },
+              {
                 "type": "TOKEN",
                 "content": {
                   "type": "PATTERN",
                   "value": "[^\\s\\[]"
                 }
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_rule_bracket"
               }
             ]
           }
@@ -457,17 +474,8 @@
           ]
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "string"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "rule"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "rule"
         },
         {
           "type": "CHOICE",
