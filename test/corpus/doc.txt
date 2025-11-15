@@ -1,6 +1,6 @@
-=============
+==================
 basic
-=============
+==================
 
 %option noyywrap
 
@@ -10,7 +10,7 @@ digit   [0-9]
 
 %%
 
--------------
+------------------
 
 (source_file
   (section1
@@ -22,69 +22,9 @@ digit   [0-9]
       (rule)))
   (section2))
 
-=============
-comments
-=============
-
-/* a comment */
-
-%{
-#include "y.tab.h"
-%}
-
-%p 6000 /* set positions to 6000 */
-%option noyywrap
-
-/* even more comments wow */
-
-%%
-
-"+"                  { return PLUS;       }
-"-"                  { return MINUS;      }
-"//".+               { return COMMENT;    }
-\n                   /* more stuff */
-[ \t\r]              /* skip whitespace */
-
-%%
-
--------------
-
-(source_file
-  (section1
-    (comment)
-    (prologue
-      (embedded_code))
-    (alias
-      (identifier)
-      (rule))
-    (comment)
-    (alias
-      (identifier)
-      (rule))
-    (comment))
-  (section2
-    (declaration
-      (rule
-        (string))
-      (embedded_code))
-    (declaration
-      (rule
-        (string))
-      (embedded_code))
-    (declaration
-      (rule
-        (string))
-      (embedded_code))
-    (declaration
-      (rule)
-      (comment))
-    (declaration
-      (rule)
-      (comment))))
-
-=============
+==================
 embedded_code
-=============
+==================
 
 %{
 #include "y.tab.h"
@@ -103,7 +43,7 @@ int thing() {
     return true;
 }
 
--------------
+------------------
 
 (source_file
   (section1
@@ -124,9 +64,9 @@ int thing() {
       (embedded_code)))
   (embedded_code))
 
-=============
+==================
 states
-=============
+==================
 
 %{
 #include "y.tab.h"
@@ -136,6 +76,7 @@ states
 
 %%
 
+
 "/*"                       { BEGIN(COMMENT); }
 <COMMENT>([^*]|\*[^/])*    /* */
 <COMMENT>\n.*              { yycolumn = 1;
@@ -144,7 +85,7 @@ states
 
 %%
 
--------------
+------------------
 
 (source_file
   (section1
@@ -161,16 +102,47 @@ states
     (declaration
       (state
         (identifier))
-      (rule)
+      (rule
+        (escaped))
       (comment))
     (declaration
       (state
         (identifier))
-      (rule)
+      (rule
+        (escaped))
       (embedded_code))
     (declaration
       (state
         (identifier))
       (rule
         (string))
+      (embedded_code))))
+
+==================
+more complex rules
+==================
+
+%%
+
+[]              /* technically not valid, but a pretty common state while typing */
+[0-9]+\.[0-9]+  { return FLOAT; }
+[ \t]           { return WHITESPACE; }
+
+%%
+
+------------------
+
+(source_file
+  (section1)
+  (section2
+    (declaration
+      (rule)
+      (comment))
+    (declaration
+      (rule
+        (escaped))
+      (embedded_code))
+    (declaration
+      (rule
+        (escaped))
       (embedded_code))))

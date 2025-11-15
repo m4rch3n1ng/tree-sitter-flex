@@ -63,19 +63,19 @@ module.exports = grammar({
       "%%",
     ),
 
-    _rule_bracket: _ => seq("[", token(/[^\]]+/), token("]")),
+    escaped: _ => seq("\\", token(/./)),
 
-    rule: $ => seq(
-      choice(
-        $._rule_bracket,
+    _bracketed_token: $ => choice($.escaped, token(/[^\]\n]/)),
+    _bracketed_tokens: $ => seq(choice("^", $._bracketed_token), repeat(choice("-", $._bracketed_token))),
+    _bracketed: $ => seq("[", optional($._bracketed_tokens), token("]")),
+
+    _rule_token: $ => choice("+", "*", "?", "|", $.escaped, token(/\S/)),
+
+    rule: $ => repeat1(choice(
         $.string,
-        token(/[^"<\s\[]/),
+        $._bracketed,
+        $._rule_token,
       ),
-      repeat(choice(
-        $.string,
-        $._rule_bracket,
-        token(/[^\s\[]/),
-      )),
     ),
 
     state: $ => seq(

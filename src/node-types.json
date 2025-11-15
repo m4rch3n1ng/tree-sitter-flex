@@ -56,6 +56,11 @@
     "fields": {}
   },
   {
+    "type": "escaped",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "prologue",
     "named": true,
     "fields": {},
@@ -78,6 +83,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "escaped",
+          "named": true
+        },
         {
           "type": "string",
           "named": true
@@ -184,7 +193,19 @@
     "named": false
   },
   {
+    "type": "*",
+    "named": false
+  },
+  {
     "type": "*/",
+    "named": false
+  },
+  {
+    "type": "+",
+    "named": false
+  },
+  {
+    "type": "-",
     "named": false
   },
   {
@@ -200,11 +221,23 @@
     "named": false
   },
   {
+    "type": "?",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
   {
+    "type": "\\",
+    "named": false
+  },
+  {
     "type": "]",
+    "named": false
+  },
+  {
+    "type": "^",
     "named": false
   },
   {
@@ -213,6 +246,10 @@
   },
   {
     "type": "{",
+    "named": false
+  },
+  {
+    "type": "|",
     "named": false
   },
   {

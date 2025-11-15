@@ -5,7 +5,11 @@
 (alias (identifier) @keyword.directive
   (#match? @keyword.directive "^%"))
 
-(rule) @constant.numeric
+(rule) @string.regexp
+(rule ["+" "*" "?" "|" "^" "-"] @operator)
+(rule ["[" "]"] @punctuation.bracket)
+(rule (escaped) @constant.character.escape)
+
 (string) @string
 
 [
