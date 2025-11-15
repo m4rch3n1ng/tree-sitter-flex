@@ -26,7 +26,8 @@ module.exports = grammar({
     _comments: $ => repeat1(seq($.comment, $._space)),
     _inline_comments: $ => repeat1(seq($.comment, optional($._whitespace))),
 
-    identifier: _ => /(\p{XID_Start}|%)\p{XID_Continue}*/,
+    identifier: _ => /\p{XID_Start}\p{XID_Continue}*/,
+    _directive: _ => /%\p{XID_Start}\p{XID_Continue}*/,
 
     prologue: $ => seq(
       "%{",
@@ -35,6 +36,18 @@ module.exports = grammar({
     ),
 
     prologue_body: _ => token(/([^%]|%[^}])*/),
+
+    directive: $ => seq(
+      alias(alias($._directive, $.identifier), $.identifier),
+      optional($._whitespace),
+      optional($._inline_comments),
+      optional(seq(
+        alias(token(/[^\s/]+/), $.value),
+        optional($._whitespace),
+        optional($._inline_comments),
+      )),
+      $._newline,
+    ),
 
     alias: $ => seq(
       $.identifier,
@@ -57,7 +70,7 @@ module.exports = grammar({
         optional($._comments),
       )),
       repeat(seq(
-          $.alias,
+          choice($.directive, $.alias),
           optional($._space),
           optional($._comments),
       )),

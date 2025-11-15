@@ -55,6 +55,29 @@
     }
   },
   {
+    "type": "directive",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "embedded_code",
     "named": true,
     "fields": {}
@@ -131,6 +154,10 @@
         },
         {
           "type": "comment",
+          "named": true
+        },
+        {
+          "type": "directive",
           "named": true
         },
         {
@@ -273,6 +300,10 @@
   },
   {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "value",
     "named": true
   },
   {

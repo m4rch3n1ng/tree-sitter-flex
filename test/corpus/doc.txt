@@ -14,9 +14,9 @@ digit   [0-9]
 
 (source_file
   (section1
-    (alias
+    (directive
       (identifier)
-      (rule))
+      (value))
     (alias
       (identifier)
       (rule)))
@@ -60,17 +60,17 @@ digit
     (comment)
     (prologue
       (embedded_code))
-    (alias
+    (directive
       (identifier)
       (comment)
       (comment)
-      (rule)
+      (value)
       (comment))
     (comment)
-    (alias
+    (directive
       (identifier)
-      (rule))
-    (alias
+      (value))
+    (directive
       (identifier))
     (comment)
     (alias
@@ -131,9 +131,9 @@ int thing() {
   (section1
     (prologue
       (embedded_code))
-    (alias
+    (directive
       (identifier)
-      (rule)
+      (value)
       (comment)))
   (section2
     (declaration
@@ -173,9 +173,9 @@ states
   (section1
     (prologue
       (embedded_code))
-    (alias
+    (directive
       (identifier)
-      (rule)))
+      (value)))
   (section2
     (declaration
       (rule
