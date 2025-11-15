@@ -122,18 +122,29 @@ states
 more complex rules
 ==================
 
+digit         [0-9]
+letter        [a-zA-Z]
+
 %%
 
 []              /* technically not valid, but a pretty common state while typing */
 [0-9]+\.[0-9]+  { return FLOAT; }
 [ \t]           { return WHITESPACE; }
-
+{letter}({letter}|{digit})* {
+                       yylval.id = strdup(yytext);
+                       return IDENT;      }
 %%
 
 ------------------
 
 (source_file
-  (section1)
+  (section1
+    (alias
+      (identifier)
+      (rule))
+    (alias
+      (identifier)
+      (rule)))
   (section2
     (declaration
       (rule)
@@ -145,4 +156,13 @@ more complex rules
     (declaration
       (rule
         (escaped))
+      (embedded_code))
+    (declaration
+      (rule
+        (interpolation
+          (identifier))
+        (interpolation
+          (identifier))
+        (interpolation
+          (identifier)))
       (embedded_code))))

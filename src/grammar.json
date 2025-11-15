@@ -337,6 +337,23 @@
         }
       ]
     },
+    "interpolation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
     "_bracketed_token": {
       "type": "CHOICE",
       "members": [
@@ -458,6 +475,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "interpolation"
+          },
+          {
+            "type": "SYMBOL",
             "name": "_bracketed"
           },
           {
@@ -544,16 +565,8 @@
           "name": "rule"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_whitespace"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_whitespace"
         },
         {
           "type": "CHOICE",
