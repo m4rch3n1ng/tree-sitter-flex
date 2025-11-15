@@ -72,8 +72,6 @@ comments
       (rule)
       (comment))
     (declaration
-      (rule))
-    (declaration
       (rule)
       (comment))))
 

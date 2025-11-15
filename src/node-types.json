@@ -75,6 +75,11 @@
     }
   },
   {
+    "type": "rule",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "section1",
     "named": true,
     "fields": {},
@@ -189,11 +194,15 @@
     "named": false
   },
   {
-    "type": "identifier",
-    "named": true
+    "type": "[",
+    "named": false
   },
   {
-    "type": "rule",
+    "type": "]",
+    "named": false
+  },
+  {
+    "type": "identifier",
     "named": true
   },
   {

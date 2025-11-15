@@ -63,7 +63,18 @@ module.exports = grammar({
       "%%",
     ),
 
-    rule: _ => /[^<"]\S*?/,
+    _rule_bracket: _ => seq("[", token(/[^\]]+/), token("]")),
+
+    rule: $ => seq(
+      choice(
+        $._rule_bracket,
+        token(/[^"<\s\[]/)
+      ),
+      repeat(choice(
+        token(/[^\s\[]/),
+        $._rule_bracket,
+      )),
+    ),
 
     state: $ => seq(
       "<",
@@ -93,7 +104,7 @@ module.exports = grammar({
       optional($._whitespace),
       optional($.embedded_code),
       optional($.comment),
-      optional($._newline),
+      $._newline,
     ),
 
     section2: $ => seq(
