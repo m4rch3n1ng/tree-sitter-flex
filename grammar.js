@@ -65,9 +65,9 @@ module.exports = grammar({
       optional($._space),
       optional($._comments),
       repeat(seq(
-          choice($.directive, $.definition, $.prologue),
-          optional($._space),
-          optional($._comments),
+        choice($.directive, $.definition, $.prologue),
+        optional($._space),
+        optional($._comments),
       )),
       "%%",
     ),
@@ -102,25 +102,31 @@ module.exports = grammar({
       '"'
     ),
 
-    embedded_code: _ => seq(
+    _embedded_code: _ => seq(
       '{',
       // TODO: allow { in code blocks if balanced
       token(/[^}]*/),
       '}'
     ),
 
+    embedded_code: $ => seq(
+      choice($._embedded_code, token(/.*?\S/)),
+      repeat(seq(
+        optional($._whitespace),
+        choice($._embedded_code, token(/.*?\S/))
+      )),
+    ),
+
     declaration: $ => seq(
       optional($.state),
       $.rule,
-      optional(seq(
-        $._whitespace,
-        optional($._inline_comments),
-        optional(seq(
+      choice(
+        seq(
+          $._whitespace,
           $.embedded_code,
-          optional($._whitespace),
-          optional($._inline_comments),
-        )),
-      )),
+        ),
+        optional($._whitespace),
+      ),
       $._newline,
     ),
 

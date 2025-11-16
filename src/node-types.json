@@ -13,10 +13,6 @@
       "required": true,
       "types": [
         {
-          "type": "comment",
-          "named": true
-        },
-        {
           "type": "embedded_code",
           "named": true
         },

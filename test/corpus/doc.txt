@@ -246,6 +246,8 @@ letter        [a-zA-Z]
 {letter}({letter}|{digit})* {
                        yylval.id = strdup(yytext);
                        return IDENT;      }
+"/*"            BEGIN(IN_COMMENT);
+
 %%
 
 ------------------
