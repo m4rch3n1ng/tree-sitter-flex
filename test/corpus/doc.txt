@@ -91,17 +91,11 @@ digit
     (declaration
       (rule
         (string))
-      (comment)
-      (comment)
-      (embedded_code)
-      (comment))
+      (embedded_code))
     (declaration
       (rule
         (string))
-      (comment)
-      (embedded_code)
-      (comment)
-      (comment))
+      (embedded_code))
     (declaration
       (rule
         (string))
@@ -113,7 +107,7 @@ digit
       (rule
         (escaped)
         (escaped))
-      (comment))))
+      (embedded_code))))
 
 ==================
 embedded_code
@@ -214,22 +208,22 @@ states
       (embedded_code))
     (declaration
       (state
-        (identifier))
-      (rule
-        (escaped))
-      (comment))
+        (identifier)
+        (rule
+          (escaped))
+        (embedded_code)))
     (declaration
       (state
-        (identifier))
-      (rule
-        (escaped))
-      (embedded_code))
+        (identifier)
+        (rule
+          (escaped))
+        (embedded_code)))
     (declaration
       (state
-        (identifier))
-      (rule
-        (string))
-      (embedded_code))))
+        (identifier)
+        (rule
+          (string))
+        (embedded_code)))))
 
 ==================
 more complex rules
@@ -263,7 +257,7 @@ letter        [a-zA-Z]
   (section2
     (declaration
       (rule)
-      (comment))
+      (embedded_code))
     (declaration
       (rule
         (escaped))
@@ -280,4 +274,53 @@ letter        [a-zA-Z]
           (identifier))
         (interpolation
           (identifier)))
+      (embedded_code))
+    (declaration
+      (rule
+        (string))
       (embedded_code))))
+
+==================
+multiline state
+==================
+
+%%
+
+<INITIAL>{
+"/*"      BEGIN(IN_COMMENT);
+}
+<IN_COMMENT>{
+"*/"      BEGIN(INITIAL);
+[^*\n]+   // eat comment in chunks
+"*"       // eat the lone star
+\n        yylineno++;
+}
+
+%%
+
+------------------
+
+(source_file
+  (section1)
+  (section2
+    (declaration
+      (state
+        (identifier)
+        (rule
+          (string))
+        (embedded_code)))
+    (declaration
+      (state
+        (identifier)
+        (rule
+          (string))
+        (embedded_code)
+        (rule
+          (escaped))
+        (embedded_code)
+        (rule
+          (string))
+        (embedded_code)
+        (rule
+          (escaped))
+        (embedded_code)))))

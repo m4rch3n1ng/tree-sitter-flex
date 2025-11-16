@@ -90,12 +90,6 @@ module.exports = grammar({
       $._rule_token,
     )),
 
-    state: $ => seq(
-      "<",
-      $.identifier,
-      ">"
-    ),
-
     string: _ => seq(
       '"',
       token(/[^"\n]*/),
@@ -117,8 +111,23 @@ module.exports = grammar({
       )),
     ),
 
-    declaration: $ => seq(
-      optional($.state),
+    state: $ => seq(
+      "<",
+      $.identifier,
+      ">",
+      choice(
+        seq(
+          '{',
+          repeat($._declaration),
+          '}',
+          optional($._whitespace),
+          $._newline,
+        ),
+        $._declaration,
+      ),
+    ),
+
+    _declaration: $ => seq(
       $.rule,
       choice(
         seq(
@@ -128,6 +137,11 @@ module.exports = grammar({
         optional($._whitespace),
       ),
       $._newline,
+    ),
+
+    declaration: $ => choice(
+      $.state,
+      $._declaration,
     ),
 
     section2: $ => seq(
