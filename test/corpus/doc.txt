@@ -2,6 +2,10 @@
 basic
 ==================
 
+%{
+#include "yy.tab.h"
+%}
+
 %option noyywrap
 
 digit   [0-9]
@@ -14,6 +18,8 @@ digit   [0-9]
 
 (source_file
   (section1
+    (prologue
+      (embedded_code))
     (directive
       (identifier)
       (value))
@@ -27,6 +33,8 @@ comments
 ==================
 
 /* a comment */
+
+letter [a-zA-Z]
 
 %{
 #include "y.tab.h"
@@ -58,6 +66,9 @@ digit
 (source_file
   (section1
     (comment)
+    (alias
+      (identifier)
+      (rule))
     (prologue
       (embedded_code))
     (directive
@@ -108,8 +119,17 @@ digit
 embedded_code
 ==================
 
+%option noyywrap
+
 %{
 #include "y.tab.h"
+%}
+
+%e 4000
+digit [0-9]
+
+%{
+int lineno = 0;
 %}
 
 %p 6000 /* set positions to 6000 */
@@ -129,6 +149,17 @@ int thing() {
 
 (source_file
   (section1
+    (directive
+      (identifier)
+      (value))
+    (prologue
+      (embedded_code))
+    (directive
+      (identifier)
+      (value))
+    (alias
+      (identifier)
+      (rule))
     (prologue
       (embedded_code))
     (directive

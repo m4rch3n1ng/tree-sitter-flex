@@ -64,13 +64,8 @@ module.exports = grammar({
     section1: $ => seq(
       optional($._space),
       optional($._comments),
-      optional(seq(
-        $.prologue,
-        optional($._space),
-        optional($._comments),
-      )),
       repeat(seq(
-          choice($.directive, $.alias),
+          choice($.directive, $.prologue, $.alias),
           optional($._space),
           optional($._comments),
       )),
