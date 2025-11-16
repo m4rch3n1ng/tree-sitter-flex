@@ -23,7 +23,7 @@ digit   [0-9]
     (directive
       (identifier)
       (value))
-    (alias
+    (definition
       (identifier)
       (rule)))
   (section2))
@@ -66,7 +66,7 @@ digit
 (source_file
   (section1
     (comment)
-    (alias
+    (definition
       (identifier)
       (rule))
     (prologue
@@ -84,7 +84,7 @@ digit
     (directive
       (identifier))
     (comment)
-    (alias
+    (definition
       (identifier))
     (comment))
   (section2
@@ -157,7 +157,7 @@ int thing() {
     (directive
       (identifier)
       (value))
-    (alias
+    (definition
       (identifier)
       (rule))
     (prologue
@@ -252,10 +252,10 @@ letter        [a-zA-Z]
 
 (source_file
   (section1
-    (alias
+    (definition
       (identifier)
       (rule))
-    (alias
+    (definition
       (identifier)
       (rule)))
   (section2

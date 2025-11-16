@@ -49,7 +49,7 @@ module.exports = grammar({
       $._newline,
     ),
 
-    alias: $ => seq(
+    definition: $ => seq(
       $.identifier,
       optional($._whitespace),
       optional($._inline_comments),
@@ -65,7 +65,7 @@ module.exports = grammar({
       optional($._space),
       optional($._comments),
       repeat(seq(
-          choice($.directive, $.prologue, $.alias),
+          choice($.directive, $.definition, $.prologue),
           optional($._space),
           optional($._comments),
       )),

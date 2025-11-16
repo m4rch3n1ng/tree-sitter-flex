@@ -1,5 +1,5 @@
 (directive (identifier) @keyword.directive)
-(alias (identifier) @variable)
+(definition (identifier) @variable)
 
 (state (identifier) @constant)
 

@@ -257,7 +257,7 @@
         }
       ]
     },
-    "alias": {
+    "definition": {
       "type": "SEQ",
       "members": [
         {
@@ -376,11 +376,11 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "prologue"
+                    "name": "definition"
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "alias"
+                    "name": "prologue"
                   }
                 ]
               },
