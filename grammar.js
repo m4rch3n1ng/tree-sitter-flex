@@ -16,30 +16,24 @@ module.exports = grammar({
     source_file: $ => seq(
       optional($._space),
       optional($._comments),
-      alias(
-        repeat(seq(
-          choice($.directive, $.definition, $.prologue),
-          optional($._space),
-          optional($._comments),
-        )),
-        $.section1
-      ),
+      repeat(seq(
+        choice($.directive, $.definition, $.prologue),
+        optional($._space),
+        optional($._comments),
+      )),
       optional(seq(
         "%%",
-        alias(
-          repeat(seq(choice(
-            seq(
-              $._whitespace,
-              repeat(seq(
-                $.comment,
-                optional($._whitespace)
-              )),
-              $._newline,
-            ),
-            $._declaration_or_condition,
-          ))),
-          $.section2
-        ),
+        repeat(seq(choice(
+          seq(
+            $._whitespace,
+            repeat(seq(
+              $.comment,
+              optional($._whitespace)
+            )),
+            $._newline,
+          ),
+          $._declaration_or_condition,
+        ))),
         optional($._whitespace),
         optional(seq(
           "%%",

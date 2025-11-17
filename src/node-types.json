@@ -151,35 +151,9 @@
     }
   },
   {
-    "type": "section1",
+    "type": "source_file",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "definition",
-          "named": true
-        },
-        {
-          "type": "directive",
-          "named": true
-        },
-        {
-          "type": "prologue",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "section2",
-    "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -194,23 +168,11 @@
           "named": true
         },
         {
-          "type": "rule",
+          "type": "definition",
           "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "source_file",
-    "named": true,
-    "root": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
+        },
         {
-          "type": "comment",
+          "type": "directive",
           "named": true
         },
         {
@@ -218,11 +180,11 @@
           "named": true
         },
         {
-          "type": "section1",
+          "type": "prologue",
           "named": true
         },
         {
-          "type": "section2",
+          "type": "rule",
           "named": true
         }
       ]

@@ -17,15 +17,14 @@ digit   [0-9]
 ------------------
 
 (source_file
-  (section1
-    (prologue
-      (embedded_code))
-    (directive
-      (identifier)
-      (value))
-    (definition
-      (identifier)
-      (pattern))))
+  (prologue
+    (embedded_code))
+  (directive
+    (identifier)
+    (value))
+  (definition
+    (identifier)
+    (pattern)))
 
 ==================
 comments
@@ -67,53 +66,51 @@ digit
 
 (source_file
   (comment)
-  (section1
-    (definition
-      (identifier)
-      (pattern))
-    (prologue
-      (embedded_code))
-    (directive
-      (identifier)
-      (comment)
-      (comment)
-      (value)
-      (comment))
+  (definition
+    (identifier)
+    (pattern))
+  (prologue
+    (embedded_code))
+  (directive
+    (identifier)
     (comment)
-    (directive
-      (identifier)
-      (value))
-    (directive
-      (identifier))
     (comment)
-    (definition
-      (identifier))
+    (value)
     (comment))
-  (section2
-    (rule
-      (pattern
-        (string))
-      (embedded_code))
-    (rule
-      (pattern
-        (string))
-      (embedded_code))
-    (comment)
-    (rule
-      (pattern
-        (string)
-        (comment))
-      (embedded_code))
-    (comment)
-    (comment)
-    (rule
-      (pattern
-        (escaped)))
-    (rule
-      (pattern
-        (escaped)
-        (escaped))
-      (embedded_code))))
+  (comment)
+  (directive
+    (identifier)
+    (value))
+  (directive
+    (identifier))
+  (comment)
+  (definition
+    (identifier))
+  (comment)
+  (rule
+    (pattern
+      (string))
+    (embedded_code))
+  (rule
+    (pattern
+      (string))
+    (embedded_code))
+  (comment)
+  (rule
+    (pattern
+      (string)
+      (comment))
+    (embedded_code))
+  (comment)
+  (comment)
+  (rule
+    (pattern
+      (escaped)))
+  (rule
+    (pattern
+      (escaped)
+      (escaped))
+    (embedded_code)))
 
 ==================
 embedded_code
@@ -148,33 +145,31 @@ int thing() {
 ------------------
 
 (source_file
-  (section1
-    (directive
-      (identifier)
-      (value))
-    (prologue
-      (embedded_code))
-    (directive
-      (identifier)
-      (value))
-    (definition
-      (identifier)
-      (pattern))
-    (prologue
-      (embedded_code))
-    (directive
-      (identifier)
-      (value)
-      (comment)))
-  (section2
-    (rule
-      (pattern
-        (string))
-      (embedded_code))
-    (rule
-      (pattern
-        (string))
-      (embedded_code)))
+  (directive
+    (identifier)
+    (value))
+  (prologue
+    (embedded_code))
+  (directive
+    (identifier)
+    (value))
+  (definition
+    (identifier)
+    (pattern))
+  (prologue
+    (embedded_code))
+  (directive
+    (identifier)
+    (value)
+    (comment))
+  (rule
+    (pattern
+      (string))
+    (embedded_code))
+  (rule
+    (pattern
+      (string))
+    (embedded_code))
   (embedded_code))
 
 ==================
@@ -202,41 +197,39 @@ states
 ------------------
 
 (source_file
-  (section1
-    (prologue
-      (embedded_code))
-    (directive
-      (identifier)
-      (value)))
-  (section2
+  (prologue
+    (embedded_code))
+  (directive
+    (identifier)
+    (value))
+  (rule
+    (pattern
+      (string))
+    (embedded_code))
+  (condition
+    (rule
+      (pattern
+        (escaped))
+      (embedded_code)))
+  (condition
+    (identifier)
+    (rule
+      (pattern
+        (escaped))
+      (embedded_code)))
+  (condition
+    (identifier)
+    (identifier)
+    (rule
+      (pattern
+        (escaped))
+      (embedded_code)))
+  (condition
+    (identifier)
     (rule
       (pattern
         (string))
-      (embedded_code))
-    (condition
-      (rule
-        (pattern
-          (escaped))
-        (embedded_code)))
-    (condition
-      (identifier)
-      (rule
-        (pattern
-          (escaped))
-        (embedded_code)))
-    (condition
-      (identifier)
-      (identifier)
-      (rule
-        (pattern
-          (escaped))
-        (embedded_code)))
-    (condition
-      (identifier)
-      (rule
-        (pattern
-          (string))
-        (embedded_code)))))
+      (embedded_code))))
 
 ==================
 more complex rules
@@ -262,38 +255,36 @@ letter        [a-zA-Z]
 ------------------
 
 (source_file
-  (section1
-    (definition
-      (identifier)
-      (pattern))
-    (definition
-      (identifier)
-      (pattern)))
-  (section2
-    (rule
-      (pattern)
-      (embedded_code))
-    (rule
-      (pattern
-        (escaped))
-      (embedded_code))
-    (rule
-      (pattern
-        (escaped))
-      (embedded_code))
-    (rule
-      (pattern
-        (expansion
-          (identifier))
-        (expansion
-          (identifier))
-        (expansion
-          (identifier)))
-      (embedded_code))
-    (rule
-      (pattern
-        (string))
-      (embedded_code))))
+  (definition
+    (identifier)
+    (pattern))
+  (definition
+    (identifier)
+    (pattern))
+  (rule
+    (pattern)
+    (embedded_code))
+  (rule
+    (pattern
+      (escaped))
+    (embedded_code))
+  (rule
+    (pattern
+      (escaped))
+    (embedded_code))
+  (rule
+    (pattern
+      (expansion
+        (identifier))
+      (expansion
+        (identifier))
+      (expansion
+        (identifier)))
+    (embedded_code))
+  (rule
+    (pattern
+      (string))
+    (embedded_code)))
 
 ==================
 multiline state
@@ -316,31 +307,30 @@ multiline state
 ------------------
 
 (source_file
-  (section2
-    (condition
-      (identifier)
-      (rule
-        (pattern
-          (string))
-        (embedded_code)))
-    (condition
-      (identifier)
-      (rule
-        (pattern
-          (string))
-        (embedded_code))
-      (rule
-        (pattern
-          (escaped))
-        (embedded_code))
-      (rule
-        (pattern
-          (string))
-        (embedded_code))
-      (rule
-        (pattern
-          (escaped))
-        (embedded_code)))))
+  (condition
+    (identifier)
+    (rule
+      (pattern
+        (string))
+      (embedded_code)))
+  (condition
+    (identifier)
+    (rule
+      (pattern
+        (string))
+      (embedded_code))
+    (rule
+      (pattern
+        (escaped))
+      (embedded_code))
+    (rule
+      (pattern
+        (string))
+      (embedded_code))
+    (rule
+      (pattern
+        (escaped))
+      (embedded_code))))
 
 ==================
 incomplete 02
@@ -355,18 +345,16 @@ digit [0-9]
 ------------------
 
 (source_file
-  (section1
-    (definition
-      (identifier)
-      (pattern)))
-  (section2
-    (rule
-      (pattern
-        (expansion
-          (identifier))
-        (escaped)
-        (expansion
-          (identifier))))))
+  (definition
+    (identifier)
+    (pattern))
+  (rule
+    (pattern
+      (expansion
+        (identifier))
+      (escaped)
+      (expansion
+        (identifier)))))
 
 ==================
 incomplete 01
@@ -377,7 +365,6 @@ digit [0-9]
 ------------------
 
 (source_file
-  (section1
-    (definition
-      (identifier)
-      (pattern))))
+  (definition
+    (identifier)
+    (pattern)))
