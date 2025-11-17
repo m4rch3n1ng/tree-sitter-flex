@@ -104,43 +104,101 @@
                                 "name": "_whitespace"
                               },
                               {
-                                "type": "REPEAT",
-                                "content": {
-                                  "type": "SEQ",
-                                  "members": [
-                                    {
-                                      "type": "SYMBOL",
-                                      "name": "comment"
-                                    },
-                                    {
-                                      "type": "CHOICE",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_whitespace"
-                                        },
-                                        {
-                                          "type": "BLANK"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              },
-                              {
-                                "type": "SYMBOL",
-                                "name": "_newline"
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "SYMBOL",
+                                    "name": "embedded_code"
+                                  },
+                                  {
+                                    "type": "BLANK"
+                                  }
+                                ]
                               }
                             ]
                           },
                           {
-                            "type": "SYMBOL",
-                            "name": "_declaration_or_condition"
+                            "type": "BLANK"
                           }
                         ]
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_newline"
                       }
                     ]
                   }
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "_declaration_or_condition"
+                        },
+                        {
+                          "type": "REPEAT",
+                          "content": {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SYMBOL",
+                                        "name": "_whitespace"
+                                      },
+                                      {
+                                        "type": "REPEAT",
+                                        "content": {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SYMBOL",
+                                              "name": "comment"
+                                            },
+                                            {
+                                              "type": "CHOICE",
+                                              "members": [
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_whitespace"
+                                                },
+                                                {
+                                                  "type": "BLANK"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      {
+                                        "type": "SYMBOL",
+                                        "name": "_newline"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "SYMBOL",
+                                    "name": "_declaration_or_condition"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 },
                 {
                   "type": "CHOICE",

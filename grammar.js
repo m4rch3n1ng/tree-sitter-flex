@@ -23,17 +23,24 @@ module.exports = grammar({
       )),
       optional(seq(
         "%%",
-        repeat(seq(choice(
-          seq(
-            $._whitespace,
-            repeat(seq(
-              $.comment,
-              optional($._whitespace)
-            )),
-            $._newline,
-          ),
+        repeat(seq(
+          optional(seq($._whitespace, optional($.embedded_code))),
+          $._newline
+        )),
+        optional(seq(
           $._declaration_or_condition,
-        ))),
+          repeat(seq(choice(
+            seq(
+              $._whitespace,
+              repeat(seq(
+                $.comment,
+                optional($._whitespace)
+              )),
+              $._newline,
+            ),
+            $._declaration_or_condition,
+          ))),
+        )),
         optional($._whitespace),
         optional(seq(
           "%%",

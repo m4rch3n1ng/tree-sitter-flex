@@ -133,6 +133,10 @@ int lineno = 0;
 
 %%
 
+    ++lineno;
+    if (true)
+      --lineno;
+
 ""                   { return THE_VOID; }
 "+"                  { return PLUS;     } lineno += 1;
 
@@ -162,6 +166,9 @@ int thing() {
     (identifier)
     (value)
     (comment))
+  (embedded_code)
+  (embedded_code)
+  (embedded_code)
   (rule
     (pattern
       (string))
