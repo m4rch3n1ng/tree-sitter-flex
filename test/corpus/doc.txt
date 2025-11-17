@@ -102,7 +102,9 @@ digit
       (embedded_code))
     (declaration
       (rule
-        (escaped)
+        (escaped)))
+    (declaration
+      (rule
         (escaped)
         (escaped))
       (embedded_code))))
@@ -128,8 +130,8 @@ int lineno = 0;
 
 %%
 
-""                   { return THE_VOID;   }
-"+"                  { return PLUS;       }
+""                   { return THE_VOID; }
+"+"                  { return PLUS;     } lineno += 1;
 
 %%
 

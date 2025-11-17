@@ -99,11 +99,11 @@ module.exports = grammar({
     _embedded_code: _ => seq(
       '{',
       // TODO: allow { in code blocks if balanced
-      token(/[^}]*/),
+      optional(token(/[^}]+/)),
       '}'
     ),
 
-    embedded_code: $ =>  repeat1(choice(
+    embedded_code: $ => repeat1(choice(
       $._embedded_code,
       token(/[^{\n]+/)
     )),
@@ -125,25 +125,25 @@ module.exports = grammar({
     ),
 
     declaration: $ => seq(
-      optional($._whitespace),
       $.rule,
-      seq(
-        $._whitespace,
-        $.embedded_code
+      choice(
+        optional($._whitespace),
+        seq(
+          $._whitespace,
+          $.embedded_code
+        ),
       ),
-      optional($._whitespace),
       $._newline,
     ),
 
-    _declaration_or_state: $ => choice(
-      $.state,
-      $.declaration,
-    ),
+    _declaration_or_state: $ => choice($.state, $.declaration),
 
     section2: $ => seq(
-      optional($._space),
-      repeat($._declaration_or_state),
-      optional($._space),
+      repeat(seq(
+        optional($._whitespace),
+        choice($._declaration_or_state, $._newline),
+      )),
+      optional($._whitespace),
       "%%",
     ),
 
