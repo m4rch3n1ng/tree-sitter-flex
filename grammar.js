@@ -27,10 +27,17 @@ module.exports = grammar({
       optional(seq(
         "%%",
         alias(
-          repeat(seq(
-            optional($._whitespace),
-            choice($._declaration_or_state, $._newline),
-          )),
+          repeat(seq(choice(
+            seq(
+              $._whitespace,
+              repeat(seq(
+                $.comment,
+                optional($._whitespace)
+              )),
+              $._newline,
+            ),
+            $._declaration_or_state,
+          ))),
           $.section2
         ),
         optional($._whitespace),

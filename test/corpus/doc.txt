@@ -25,8 +25,7 @@ digit   [0-9]
       (value))
     (definition
       (identifier)
-      (rule)))
-  (section2))
+      (rule))))
 
 ==================
 comments
@@ -52,10 +51,13 @@ digit
 
 %%
 
-"+"      /* + */ /* + */  { return PLUS;    }
-"-"      /* - */          { return MINUS;   }
+"+"      /* + */ /* + */  { return PLUS;    } /* - */
+"-"      /* - */          { return MINUS;   } /* + */
+  /* */
 "//".+                    { return COMMENT; }
-
+  /* one
+  two */ /*
+  three */
 \n
 [ \t\r]                   /* skip whitespace */
 
@@ -96,10 +98,13 @@ digit
       (rule
         (string))
       (embedded_code))
+    (comment)
     (declaration
       (rule
         (string))
       (embedded_code))
+    (comment)
+    (comment)
     (declaration
       (rule
         (escaped)))
