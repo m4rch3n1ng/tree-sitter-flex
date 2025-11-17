@@ -70,11 +70,6 @@
     }
   },
   {
-    "type": "embedded_code",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "escaped",
     "named": true,
     "fields": {}
@@ -297,6 +292,10 @@
   {
     "type": "^",
     "named": false
+  },
+  {
+    "type": "embedded_code",
+    "named": true
   },
   {
     "type": "identifier",

@@ -10,6 +10,8 @@
 module.exports = grammar({
   name: "flex",
 
+  externals: $ => [$.embedded_code, $.error_sentinel],
+
   rules: {
     source_file: $ => seq(
       $.section1,
@@ -95,18 +97,6 @@ module.exports = grammar({
       token(/[^"\n]*/),
       '"'
     ),
-
-    _embedded_code: _ => seq(
-      '{',
-      // TODO: allow { in code blocks if balanced
-      optional(token(/[^}]+/)),
-      '}'
-    ),
-
-    embedded_code: $ => repeat1(choice(
-      $._embedded_code,
-      token(/[^{\n]+/)
-    )),
 
     state: $ => seq(
       "<",
