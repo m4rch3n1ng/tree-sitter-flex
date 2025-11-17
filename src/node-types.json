@@ -5,15 +5,15 @@
     "fields": {}
   },
   {
-    "type": "declaration",
+    "type": "condition",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "embedded_code",
+          "type": "identifier",
           "named": true
         },
         {
@@ -40,7 +40,7 @@
           "named": true
         },
         {
-          "type": "rule",
+          "type": "pattern",
           "named": true
         }
       ]
@@ -75,7 +75,7 @@
     "fields": {}
   },
   {
-    "type": "interpolation",
+    "type": "expansion",
     "named": true,
     "fields": {},
     "children": {
@@ -84,6 +84,33 @@
       "types": [
         {
           "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "escaped",
+          "named": true
+        },
+        {
+          "type": "expansion",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -110,22 +137,14 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "comment",
+          "type": "embedded_code",
           "named": true
         },
         {
-          "type": "escaped",
-          "named": true
-        },
-        {
-          "type": "interpolation",
-          "named": true
-        },
-        {
-          "type": "string",
+          "type": "pattern",
           "named": true
         }
       ]
@@ -171,11 +190,11 @@
           "named": true
         },
         {
-          "type": "declaration",
+          "type": "condition",
           "named": true
         },
         {
-          "type": "state",
+          "type": "rule",
           "named": true
         }
       ]
@@ -204,25 +223,6 @@
         },
         {
           "type": "section2",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "state",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "declaration",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -271,6 +271,10 @@
   },
   {
     "type": "+",
+    "named": false
+  },
+  {
+    "type": ",",
     "named": false
   },
   {

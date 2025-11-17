@@ -25,7 +25,7 @@ digit   [0-9]
       (value))
     (definition
       (identifier)
-      (rule))))
+      (pattern))))
 
 ==================
 comments
@@ -70,7 +70,7 @@ digit
   (section1
     (definition
       (identifier)
-      (rule))
+      (pattern))
     (prologue
       (embedded_code))
     (directive
@@ -90,27 +90,27 @@ digit
       (identifier))
     (comment))
   (section2
-    (declaration
-      (rule
+    (rule
+      (pattern
         (string))
       (embedded_code))
-    (declaration
-      (rule
+    (rule
+      (pattern
         (string))
       (embedded_code))
     (comment)
-    (declaration
-      (rule
+    (rule
+      (pattern
         (string)
         (comment))
       (embedded_code))
     (comment)
     (comment)
-    (declaration
-      (rule
+    (rule
+      (pattern
         (escaped)))
-    (declaration
-      (rule
+    (rule
+      (pattern
         (escaped)
         (escaped))
       (embedded_code))))
@@ -159,7 +159,7 @@ int thing() {
       (value))
     (definition
       (identifier)
-      (rule))
+      (pattern))
     (prologue
       (embedded_code))
     (directive
@@ -167,12 +167,12 @@ int thing() {
       (value)
       (comment)))
   (section2
-    (declaration
-      (rule
+    (rule
+      (pattern
         (string))
       (embedded_code))
-    (declaration
-      (rule
+    (rule
+      (pattern
         (string))
       (embedded_code)))
   (embedded_code))
@@ -191,8 +191,9 @@ states
 
 
 "/*"                       { BEGIN(COMMENT); }
-<COMMENT>([^*]|\*[^/])*    /* */
-<COMMENT>\n.*              { yycolumn = 1;
+<*>[ \t]                   /* ignore */
+<COMMENT>([^*]|\*[^/])*    /* ignore */
+<COMMENT,INITIAL>\n.*      { yycolumn = 1;
                              yyless(1); }
 <COMMENT>"*/"              { BEGIN(INITIAL); }
 
@@ -208,26 +209,32 @@ states
       (identifier)
       (value)))
   (section2
-    (declaration
-      (rule
+    (rule
+      (pattern
         (string))
       (embedded_code))
-    (state
-      (identifier)
-      (declaration
-        (rule
+    (condition
+      (rule
+        (pattern
           (escaped))
         (embedded_code)))
-    (state
+    (condition
       (identifier)
-      (declaration
-        (rule
+      (rule
+        (pattern
           (escaped))
         (embedded_code)))
-    (state
+    (condition
       (identifier)
-      (declaration
-        (rule
+      (identifier)
+      (rule
+        (pattern
+          (escaped))
+        (embedded_code)))
+    (condition
+      (identifier)
+      (rule
+        (pattern
           (string))
         (embedded_code)))))
 
@@ -258,33 +265,33 @@ letter        [a-zA-Z]
   (section1
     (definition
       (identifier)
-      (rule))
+      (pattern))
     (definition
       (identifier)
-      (rule)))
+      (pattern)))
   (section2
-    (declaration
-      (rule)
+    (rule
+      (pattern)
       (embedded_code))
-    (declaration
-      (rule
+    (rule
+      (pattern
         (escaped))
       (embedded_code))
-    (declaration
-      (rule
+    (rule
+      (pattern
         (escaped))
       (embedded_code))
-    (declaration
-      (rule
-        (interpolation
+    (rule
+      (pattern
+        (expansion
           (identifier))
-        (interpolation
+        (expansion
           (identifier))
-        (interpolation
+        (expansion
           (identifier)))
       (embedded_code))
-    (declaration
-      (rule
+    (rule
+      (pattern
         (string))
       (embedded_code))))
 
@@ -310,28 +317,28 @@ multiline state
 
 (source_file
   (section2
-    (state
+    (condition
       (identifier)
-      (declaration
-        (rule
+      (rule
+        (pattern
           (string))
         (embedded_code)))
-    (state
+    (condition
       (identifier)
-      (declaration
-        (rule
+      (rule
+        (pattern
           (string))
         (embedded_code))
-      (declaration
-        (rule
+      (rule
+        (pattern
           (escaped))
         (embedded_code))
-      (declaration
-        (rule
+      (rule
+        (pattern
           (string))
         (embedded_code))
-      (declaration
-        (rule
+      (rule
+        (pattern
           (escaped))
         (embedded_code)))))
 
@@ -351,14 +358,14 @@ digit [0-9]
   (section1
     (definition
       (identifier)
-      (rule)))
+      (pattern)))
   (section2
-    (declaration
-      (rule
-        (interpolation
+    (rule
+      (pattern
+        (expansion
           (identifier))
         (escaped)
-        (interpolation
+        (expansion
           (identifier))))))
 
 ==================
@@ -373,4 +380,4 @@ digit [0-9]
   (section1
     (definition
       (identifier)
-      (rule))))
+      (pattern))))

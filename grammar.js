@@ -36,7 +36,7 @@ module.exports = grammar({
               )),
               $._newline,
             ),
-            $._declaration_or_state,
+            $._declaration_or_condition,
           ))),
           $.section2
         ),
@@ -85,7 +85,7 @@ module.exports = grammar({
       optional($._whitespace),
       optional($._inline_comments),
       optional(seq(
-        $.rule,
+        $.pattern,
         optional($._whitespace),
         optional($._inline_comments),
       )),
@@ -94,16 +94,16 @@ module.exports = grammar({
 
     escaped: _ => seq("\\", token(/./)),
 
-    interpolation: $ => seq("{", $.identifier, "}"),
+    expansion: $ => seq("{", $.identifier, "}"),
 
     _bracketed_token: $ => choice($.escaped, token(/[^\]\n]/)),
     _bracketed_tokens: $ => seq(choice("^", $._bracketed_token), repeat(choice("-", $._bracketed_token))),
     _bracketed: $ => seq("[", optional($._bracketed_tokens), token("]")),
 
-    _rule_comment: _ => seq("(?#", optional(/[^)]+/), ")"),
+    _pattern_comment: _ => seq("(?#", optional(/[^)]+/), ")"),
 
     // TODO: properly parse groups
-    _rule_token: $ => choice("+", "*", "?", "|", alias($._rule_comment, $.comment), "(", ")", $.escaped, token(/\S/)),
+    _pattern_token: $ => choice("+", "*", "?", "|", alias($._pattern_comment, $.comment), "(", ")", $.escaped, token(/\S/)),
 
     string: _ => seq(
       '"',
@@ -111,15 +111,15 @@ module.exports = grammar({
       '"'
     ),
 
-    rule: $ => repeat1(choice(
+    pattern: $ => repeat1(choice(
       $.string,
-      $.interpolation,
+      $.expansion,
       $._bracketed,
-      $._rule_token,
+      $._pattern_token,
     )),
 
-    declaration: $ => seq(
-      $.rule,
+    rule: $ => seq(
+      $.pattern,
       choice(
         optional($._whitespace),
         seq(
@@ -130,23 +130,26 @@ module.exports = grammar({
       $._newline,
     ),
 
-    state: $ => seq(
+    condition: $ => seq(
       "<",
-      $.identifier,
+      choice(
+        "*",
+        seq($.identifier, repeat(seq(",", $.identifier))),
+      ),
       ">",
       choice(
         seq(
           '{',
-          repeat($.declaration),
+          repeat($.rule),
           '}',
           optional($._whitespace),
           $._newline,
         ),
-        $.declaration,
+        $.rule,
       ),
     ),
 
-    _declaration_or_state: $ => choice($.declaration, $.state),
+    _declaration_or_condition: $ => choice($.rule, $.condition),
 
     trailing_code: _ => /(.|\n)+/,
   }

@@ -1,13 +1,15 @@
 (directive (identifier) @keyword.directive)
 (definition (identifier) @variable)
 
-(state (identifier) @constant)
+(condition (identifier) @constant)
+(condition "," @punctuation.delimiter)
+(condition "*" @string.special)
 
-(rule) @string.regexp
-(rule ["+" "*" "?" "|" "^" "-"] @operator)
-(rule ["[" "]" "{" "}" "(" ")"] @punctuation.bracket)
-(rule (escaped) @constant.character.escape)
-(rule (interpolation (identifier) @variable))
+(pattern) @string.regexp
+(pattern ["+" "*" "?" "|" "^" "-"] @operator)
+(pattern ["[" "]" "{" "}" "(" ")"] @punctuation.bracket)
+(pattern (escaped) @constant.character.escape)
+(pattern (expansion (identifier) @variable))
 
 (string) @string
 
