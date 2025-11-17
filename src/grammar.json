@@ -679,8 +679,13 @@
                 {
                   "type": "REPEAT",
                   "content": {
-                    "type": "SYMBOL",
-                    "name": "_declaration"
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_declaration"
+                    },
+                    "named": true,
+                    "value": "declaration"
                   }
                 },
                 {

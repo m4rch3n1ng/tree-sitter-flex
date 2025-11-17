@@ -304,21 +304,26 @@ multiline state
     (declaration
       (state
         (identifier)
-        (rule
-          (string))
-        (embedded_code)))
+        (declaration
+          (rule
+            (string))
+          (embedded_code))))
     (declaration
       (state
         (identifier)
-        (rule
-          (string))
-        (embedded_code)
-        (rule
-          (escaped))
-        (embedded_code)
-        (rule
-          (string))
-        (embedded_code)
-        (rule
-          (escaped))
-        (embedded_code)))))
+        (declaration
+          (rule
+            (string))
+          (embedded_code))
+        (declaration
+          (rule
+            (escaped))
+          (embedded_code))
+        (declaration
+          (rule
+            (string))
+          (embedded_code))
+        (declaration
+          (rule
+            (escaped))
+          (embedded_code))))))

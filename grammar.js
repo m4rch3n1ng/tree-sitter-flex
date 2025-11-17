@@ -115,7 +115,7 @@ module.exports = grammar({
       choice(
         seq(
           '{',
-          repeat($._declaration),
+          repeat(alias($._declaration, $.declaration)),
           '}',
           optional($._whitespace),
           $._newline,
