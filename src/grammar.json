@@ -621,6 +621,31 @@
         }
       ]
     },
+    "_rule_comment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "(?#"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[^)]+"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "_rule_token": {
       "type": "CHOICE",
       "members": [
@@ -639,6 +664,15 @@
         {
           "type": "STRING",
           "value": "|"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_rule_comment"
+          },
+          "named": true,
+          "value": "comment"
         },
         {
           "type": "STRING",

@@ -54,7 +54,7 @@ digit
 "+"      /* + */ /* + */  { return PLUS;    } /* - */
 "-"      /* - */          { return MINUS;   } /* + */
   /* */
-"//".+                    { return COMMENT; }
+"//"(?#comment).+         { return COMMENT; }
   /* one
   two */ /*
   three */
@@ -101,7 +101,8 @@ digit
     (comment)
     (declaration
       (rule
-        (string))
+        (string)
+        (comment))
       (embedded_code))
     (comment)
     (comment)

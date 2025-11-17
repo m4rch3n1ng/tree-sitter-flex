@@ -100,8 +100,10 @@ module.exports = grammar({
     _bracketed_tokens: $ => seq(choice("^", $._bracketed_token), repeat(choice("-", $._bracketed_token))),
     _bracketed: $ => seq("[", optional($._bracketed_tokens), token("]")),
 
+    _rule_comment: _ => seq("(?#", optional(/[^)]+/), ")"),
+
     // TODO: properly parse groups
-    _rule_token: $ => choice("+", "*", "?", "|", "(", ")", $.escaped, token(/\S/)),
+    _rule_token: $ => choice("+", "*", "?", "|", alias($._rule_comment, $.comment), "(", ")", $.escaped, token(/\S/)),
 
     string: _ => seq(
       '"',
