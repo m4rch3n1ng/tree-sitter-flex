@@ -28,16 +28,23 @@ static inline bool scan_embedded_code(TSLexer *lexer) {
         if (lexer->lookahead == '{') {
             lexer->advance(lexer, false);
 
-            while (lexer->lookahead != '}' && !lexer->eof(lexer)) {
+            uint32_t braces = 1;
+            while (braces != 0 && !lexer->eof(lexer)) {
+                if (lexer->lookahead == '{') {
+                    braces += 1;
+                } else if (lexer->lookahead == '}') {
+                    braces -= 1;
+                }
+
                 lexer->advance(lexer, false);
             }
 
             if (lexer->eof(lexer)) {
                 return false;
             }
+        } else {
+            lexer->advance(lexer, false);
         }
-
-        lexer->advance(lexer, false);
     }
 
     lexer->mark_end(lexer);

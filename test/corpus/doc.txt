@@ -238,7 +238,9 @@ letter        [a-zA-Z]
 [0-9]+\.[0-9]+  { return FLOAT; }
 [ \t]           { return WHITESPACE; }
 {letter}({letter}|{digit})* {
-                       yylval.id = strdup(yytext);
+                       if (true) {
+                           yylval.id = strdup(yytext);
+                       }
                        return IDENT;      }
 "/*"            BEGIN(IN_COMMENT);
 
