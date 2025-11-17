@@ -115,16 +115,16 @@ module.exports = grammar({
       choice(
         seq(
           '{',
-          repeat(alias($._declaration, $.declaration)),
+          repeat($.declaration),
           '}',
           optional($._whitespace),
           $._newline,
         ),
-        $._declaration,
+        $.declaration,
       ),
     ),
 
-    _declaration: $ => seq(
+    declaration: $ => seq(
       optional($._whitespace),
       $.rule,
       seq(
@@ -135,14 +135,14 @@ module.exports = grammar({
       $._newline,
     ),
 
-    declaration: $ => choice(
+    _declaration_or_state: $ => choice(
       $.state,
-      $._declaration,
+      $.declaration,
     ),
 
     section2: $ => seq(
       optional($._space),
-      repeat($.declaration),
+      repeat($._declaration_or_state),
       optional($._space),
       "%%",
     ),

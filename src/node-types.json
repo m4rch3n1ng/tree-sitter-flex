@@ -19,10 +19,6 @@
         {
           "type": "rule",
           "named": true
-        },
-        {
-          "type": "state",
-          "named": true
         }
       ]
     }
@@ -174,6 +170,10 @@
         {
           "type": "declaration",
           "named": true
+        },
+        {
+          "type": "state",
+          "named": true
         }
       ]
     }
@@ -215,15 +215,7 @@
           "named": true
         },
         {
-          "type": "embedded_code",
-          "named": true
-        },
-        {
           "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "rule",
           "named": true
         }
       ]

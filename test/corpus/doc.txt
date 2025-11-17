@@ -204,21 +204,21 @@ states
       (rule
         (string))
       (embedded_code))
-    (declaration
-      (state
-        (identifier)
+    (state
+      (identifier)
+      (declaration
         (rule
           (escaped))
         (embedded_code)))
-    (declaration
-      (state
-        (identifier)
+    (state
+      (identifier)
+      (declaration
         (rule
           (escaped))
         (embedded_code)))
-    (declaration
-      (state
-        (identifier)
+    (state
+      (identifier)
+      (declaration
         (rule
           (string))
         (embedded_code)))))
@@ -301,29 +301,27 @@ multiline state
 (source_file
   (section1)
   (section2
-    (declaration
-      (state
-        (identifier)
-        (declaration
-          (rule
-            (string))
-          (embedded_code))))
-    (declaration
-      (state
-        (identifier)
-        (declaration
-          (rule
-            (string))
-          (embedded_code))
-        (declaration
-          (rule
-            (escaped))
-          (embedded_code))
-        (declaration
-          (rule
-            (string))
-          (embedded_code))
-        (declaration
-          (rule
-            (escaped))
-          (embedded_code))))))
+    (state
+      (identifier)
+      (declaration
+        (rule
+          (string))
+        (embedded_code)))
+    (state
+      (identifier)
+      (declaration
+        (rule
+          (string))
+        (embedded_code))
+      (declaration
+        (rule
+          (escaped))
+        (embedded_code))
+      (declaration
+        (rule
+          (string))
+        (embedded_code))
+      (declaration
+        (rule
+          (escaped))
+        (embedded_code)))))
