@@ -14,10 +14,32 @@ module.exports = grammar({
 
   rules: {
     source_file: $ => seq(
-      $.section1,
-      $.section2,
       optional($._space),
-      optional(alias($.trailing_code, $.embedded_code)),
+      optional($._comments),
+      alias(
+        repeat(seq(
+          choice($.directive, $.definition, $.prologue),
+          optional($._space),
+          optional($._comments),
+        )),
+        $.section1
+      ),
+      optional(seq(
+        "%%",
+        alias(
+          repeat(seq(
+            optional($._whitespace),
+            choice($._declaration_or_state, $._newline),
+          )),
+          $.section2
+        ),
+        optional($._whitespace),
+        optional(seq(
+          "%%",
+          optional($._space),
+          optional(alias($.trailing_code, $.embedded_code)),
+        )),
+      )),
     ),
 
     _whitespace: _ => /[ \t\r\v\f]+/,
@@ -63,17 +85,6 @@ module.exports = grammar({
       $._newline,
     ),
 
-    section1: $ => seq(
-      optional($._space),
-      optional($._comments),
-      repeat(seq(
-        choice($.directive, $.definition, $.prologue),
-        optional($._space),
-        optional($._comments),
-      )),
-      "%%",
-    ),
-
     escaped: _ => seq("\\", token(/./)),
 
     interpolation: $ => seq("{", $.identifier, "}"),
@@ -85,6 +96,12 @@ module.exports = grammar({
     // TODO: properly parse groups
     _rule_token: $ => choice("+", "*", "?", "|", "(", ")", $.escaped, token(/\S/)),
 
+    string: _ => seq(
+      '"',
+      token(/[^"\n]*/),
+      '"'
+    ),
+
     rule: $ => repeat1(choice(
       $.string,
       $.interpolation,
@@ -92,10 +109,16 @@ module.exports = grammar({
       $._rule_token,
     )),
 
-    string: _ => seq(
-      '"',
-      token(/[^"\n]*/),
-      '"'
+    declaration: $ => seq(
+      $.rule,
+      choice(
+        optional($._whitespace),
+        seq(
+          $._whitespace,
+          $.embedded_code
+        ),
+      ),
+      $._newline,
     ),
 
     state: $ => seq(
@@ -114,28 +137,7 @@ module.exports = grammar({
       ),
     ),
 
-    declaration: $ => seq(
-      $.rule,
-      choice(
-        optional($._whitespace),
-        seq(
-          $._whitespace,
-          $.embedded_code
-        ),
-      ),
-      $._newline,
-    ),
-
-    _declaration_or_state: $ => choice($.state, $.declaration),
-
-    section2: $ => seq(
-      repeat(seq(
-        optional($._whitespace),
-        choice($._declaration_or_state, $._newline),
-      )),
-      optional($._whitespace),
-      "%%",
-    ),
+    _declaration_or_state: $ => choice($.declaration, $.state),
 
     trailing_code: _ => /(.|\n)+/,
   }

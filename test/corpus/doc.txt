@@ -64,8 +64,8 @@ digit
 ------------------
 
 (source_file
+  (comment)
   (section1
-    (comment)
     (definition
       (identifier)
       (rule))
@@ -303,7 +303,6 @@ multiline state
 ------------------
 
 (source_file
-  (section1)
   (section2
     (state
       (identifier)
@@ -329,3 +328,43 @@ multiline state
         (rule
           (escaped))
         (embedded_code)))))
+
+==================
+incomplete 02
+==================
+
+digit [0-9]
+
+%%
+
+{digit}\.{digit}
+
+------------------
+
+(source_file
+  (section1
+    (definition
+      (identifier)
+      (rule)))
+  (section2
+    (declaration
+      (rule
+        (interpolation
+          (identifier))
+        (escaped)
+        (interpolation
+          (identifier))))))
+
+==================
+incomplete 01
+==================
+
+digit [0-9]
+
+------------------
+
+(source_file
+  (section1
+    (definition
+      (identifier)
+      (rule))))

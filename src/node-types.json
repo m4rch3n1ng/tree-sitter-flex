@@ -133,7 +133,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "comment",
@@ -180,8 +180,12 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
         {
           "type": "embedded_code",
           "named": true
