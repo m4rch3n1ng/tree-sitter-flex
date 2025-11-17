@@ -103,13 +103,10 @@ module.exports = grammar({
       '}'
     ),
 
-    embedded_code: $ => seq(
-      choice($._embedded_code, token(/.*?\S/)),
-      repeat(seq(
-        optional($._whitespace),
-        choice($._embedded_code, token(/.*?\S/))
-      )),
-    ),
+    embedded_code: $ =>  repeat1(choice(
+      $._embedded_code,
+      token(/[^{\n]+/)
+    )),
 
     state: $ => seq(
       "<",
@@ -128,14 +125,13 @@ module.exports = grammar({
     ),
 
     _declaration: $ => seq(
+      optional($._whitespace),
       $.rule,
-      choice(
-        seq(
-          $._whitespace,
-          $.embedded_code,
-        ),
-        optional($._whitespace),
+      seq(
+        $._whitespace,
+        $.embedded_code
       ),
+      optional($._whitespace),
       $._newline,
     ),
 

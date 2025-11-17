@@ -52,8 +52,8 @@ digit
 
 %%
 
-"+"      /* + */ /* + */  { return PLUS;    } /* + */
-"-"      /* - */          { return MINUS;   } /* - */ /* + */
+"+"      /* + */ /* + */  { return PLUS;    }
+"-"      /* - */          { return MINUS;   }
 "//".+                    { return COMMENT; }
 
 \n
@@ -102,9 +102,7 @@ digit
       (embedded_code))
     (declaration
       (rule
-        (escaped)))
-    (declaration
-      (rule
+        (escaped)
         (escaped)
         (escaped))
       (embedded_code))))
