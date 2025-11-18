@@ -264,6 +264,7 @@ letter        [a-zA-Z]
 []              /* technically not valid, but a pretty common state while typing */
 {digit}{0,9}\.{digit}+      { return FLOAT; }
 [ \t]                       { return WHITESPACE; }
+"[xyz]\"foo"                REJECT;
 {letter}({letter}|{digit})* {
                        if (true) {
                            yylval.id = strdup(yytext);
@@ -306,6 +307,11 @@ t{1,}x{2}              ECHO;
   (rule
     (pattern
       (bracketed
+        (escaped)))
+    (embedded_code))
+  (rule
+    (pattern
+      (string
         (escaped)))
     (embedded_code))
   (rule

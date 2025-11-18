@@ -2,6 +2,7 @@
 
 enum TokenType {
     EMBEDDED_CODE,
+    STRING_CONTENT,
     ERROR_SENTINEL,
 };
 
@@ -52,6 +53,26 @@ static inline bool scan_embedded_code(TSLexer *lexer) {
     return true;
 }
 
+static inline bool scan_string_content(TSLexer *lexer) {
+    // taken from tree-sitter-rust
+    bool has_content = false;
+    for (;;) {
+        if (lexer->eof(lexer) || lexer->lookahead == '\n') {
+            return false;
+        }
+        if (lexer->lookahead == '"' || lexer->lookahead == '\\') {
+            break;
+        }
+
+        has_content = true;
+        lexer->advance(lexer, false);
+    }
+
+    lexer->result_symbol = STRING_CONTENT;
+    lexer->mark_end(lexer);
+    return has_content;
+}
+
 bool tree_sitter_flex_external_scanner_scan(void *payload, TSLexer *lexer,
                                             const bool *valid_symbols) {
     if (valid_symbols[ERROR_SENTINEL]) {
@@ -60,6 +81,10 @@ bool tree_sitter_flex_external_scanner_scan(void *payload, TSLexer *lexer,
 
     if (valid_symbols[EMBEDDED_CODE]) {
         return scan_embedded_code(lexer);
+    }
+
+    if (valid_symbols[STRING_CONTENT]) {
+        return scan_string_content(lexer);
     }
 
     return false;

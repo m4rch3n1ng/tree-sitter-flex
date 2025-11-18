@@ -239,7 +239,17 @@
   {
     "type": "string",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escaped",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "\"",

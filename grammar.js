@@ -10,7 +10,7 @@
 module.exports = grammar({
   name: "flex",
 
-  externals: $ => [$.embedded_code, $.error_sentinel],
+  externals: $ => [$.embedded_code, $._string_content, $.error_sentinel],
 
   rules: {
     source_file: $ => seq(
@@ -120,10 +120,13 @@ module.exports = grammar({
       token(/\S/)
     ),
 
-    string: _ => seq(
+    string: $ => seq(
       '"',
-      optional(token(/[^"\n]+/)),
-      '"'
+      repeat(choice(
+        $.escaped,
+        $._string_content,
+      )),
+      '"',
     ),
 
     eof: _ => "<<EOF>>",

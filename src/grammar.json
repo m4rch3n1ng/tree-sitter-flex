@@ -808,19 +808,20 @@
           "value": "\""
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "TOKEN",
-              "content": {
-                "type": "PATTERN",
-                "value": "[^\"\\n]+"
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "escaped"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_string_content"
               }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+            ]
+          }
         },
         {
           "type": "STRING",
@@ -1091,6 +1092,10 @@
     {
       "type": "SYMBOL",
       "name": "embedded_code"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_string_content"
     },
     {
       "type": "SYMBOL",
