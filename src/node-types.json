@@ -121,11 +121,19 @@
           "named": true
         },
         {
+          "type": "eof",
+          "named": true
+        },
+        {
           "type": "escaped",
           "named": true
         },
         {
           "type": "expansion",
+          "named": true
+        },
+        {
+          "type": "quantifier",
           "named": true
         },
         {
@@ -149,6 +157,21 @@
       "types": [
         {
           "type": "embedded_code",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "quantifier",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "number",
           "named": true
         }
       ]
@@ -271,6 +294,10 @@
     "named": false
   },
   {
+    "type": "/",
+    "named": false
+  },
+  {
     "type": "/*",
     "named": false
   },
@@ -307,7 +334,15 @@
     "named": true
   },
   {
+    "type": "eof",
+    "named": true
+  },
+  {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "number",
     "named": true
   },
   {

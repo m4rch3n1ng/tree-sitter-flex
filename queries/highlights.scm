@@ -8,7 +8,7 @@
 (pattern) @string.regexp
 
 (pattern ["(" ")"] @punctuation.bracket)
-(pattern ["+" "*" "?" "|"] @operator)
+(pattern ["+" "*" "?" "|" "/"] @operator)
 (pattern ["^" "$"] @constant.character.escape)
 
 (pattern (bracketed ["[" "]"] @punctuation.bracket))
@@ -19,7 +19,11 @@
 
 (escaped) @constant.character.escape
 
+(quantifier (number) @constant.numeric)
+(quantifier "," @punctuation.delimiter)
+
 (string) @string
+(eof) @string.special
 
 [
   "%{"

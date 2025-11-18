@@ -97,6 +97,9 @@ module.exports = grammar({
 
     expansion: $ => seq("{", $.identifier, "}"),
 
+    number: _ => token(/\d+/),
+    quantifier: $ => seq("{", $.number, optional(seq(",", optional($.number))), "}"),
+
     _bracketed_token: $ => choice($.escaped, token(/[^\]\n]/)),
     _bracketed_tokens: $ => seq(choice("^", $._bracketed_token), repeat(choice("-", $._bracketed_token))),
     bracketed: $ => seq("[", optional($._bracketed_tokens), token("]")),
@@ -104,18 +107,33 @@ module.exports = grammar({
     _pattern_comment: _ => seq("(?#", optional(/[^)]+/), ")"),
 
     // TODO: properly parse groups
-    _pattern_token: $ => choice("+", "*", "?", "|", alias($._pattern_comment, $.comment), "(", ")", $.escaped, token(/\S/)),
+    _pattern_token: $ => choice(
+      "+",
+      "*",
+      "?",
+      "|",
+      "/",
+      alias($._pattern_comment, $.comment),
+      "(",
+      ")",
+      $.escaped,
+      token(/\S/)
+    ),
 
     string: _ => seq(
       '"',
-      token(/[^"\n]*/),
+      optional(token(/[^"\n]+/)),
       '"'
     ),
+
+    eof: _ => "<<EOF>>",
 
     _pattern: $ => choice(
       $.string,
       $.expansion,
+      $.quantifier,
       $.bracketed,
+      $.eof,
       $._pattern_token,
     ),
 

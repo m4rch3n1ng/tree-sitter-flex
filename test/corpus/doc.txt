@@ -202,6 +202,7 @@ states
 <COMMENT,INITIAL>\n.*      { yycolumn = 1;
                              yyless(1); }
 <COMMENT>"*/"              { BEGIN(INITIAL); }
+<COMMENT><<EOF>>           REJECT
 
 %%
 
@@ -243,6 +244,12 @@ states
     (rule
       (pattern
         (string))
+      (embedded_code)))
+  (condition
+    (identifier)
+    (rule
+      (pattern
+        (eof))
       (embedded_code))))
 
 ==================
@@ -255,15 +262,18 @@ letter        [a-zA-Z]
 %%
 
 []              /* technically not valid, but a pretty common state while typing */
-[0-9]+\.[0-9]+  { return FLOAT; }
-[ \t]           { return WHITESPACE; }
+{digit}{0,9}\.{digit}+      { return FLOAT; }
+[ \t]                       { return WHITESPACE; }
 {letter}({letter}|{digit})* {
                        if (true) {
                            yylval.id = strdup(yytext);
                        }
                        return IDENT;      }
-"/*"            BEGIN(IN_COMMENT);
+
+"/*"                   BEGIN(IN_COMMENT);
 ^{digit}^{digit}|$\.$  /* not even sure */
+<<EOF>>                /* ignore */
+t{1,}x{2}              ECHO;
 
 %%
 
@@ -284,9 +294,14 @@ letter        [a-zA-Z]
     (embedded_code))
   (rule
     (pattern
-      (bracketed)
+      (expansion
+        (identifier))
+      (quantifier
+        (number)
+        (number))
       (escaped)
-      (bracketed))
+      (expansion
+        (identifier)))
     (embedded_code))
   (rule
     (pattern
@@ -314,6 +329,17 @@ letter        [a-zA-Z]
         (identifier))
       (token)
       (escaped))
+    (embedded_code))
+  (rule
+    (pattern
+      (eof))
+    (embedded_code))
+  (rule
+    (pattern
+      (quantifier
+        (number))
+      (quantifier
+        (number)))
     (embedded_code)))
 
 ==================

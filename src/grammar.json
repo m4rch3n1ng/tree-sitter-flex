@@ -591,6 +591,59 @@
         }
       ]
     },
+    "number": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "\\d+"
+      }
+    },
+    "quantifier": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "number"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
     "_bracketed_token": {
       "type": "CHOICE",
       "members": [
@@ -714,6 +767,10 @@
           "value": "|"
         },
         {
+          "type": "STRING",
+          "value": "/"
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
@@ -751,17 +808,29 @@
           "value": "\""
         },
         {
-          "type": "TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[^\"\\n]*"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PATTERN",
+                "value": "[^\"\\n]+"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "STRING",
           "value": "\""
         }
       ]
+    },
+    "eof": {
+      "type": "STRING",
+      "value": "<<EOF>>"
     },
     "_pattern": {
       "type": "CHOICE",
@@ -776,7 +845,15 @@
         },
         {
           "type": "SYMBOL",
+          "name": "quantifier"
+        },
+        {
+          "type": "SYMBOL",
           "name": "bracketed"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "eof"
         },
         {
           "type": "SYMBOL",
