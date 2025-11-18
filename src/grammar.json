@@ -641,7 +641,7 @@
         }
       ]
     },
-    "_bracketed": {
+    "bracketed": {
       "type": "SEQ",
       "members": [
         {
@@ -763,29 +763,91 @@
         }
       ]
     },
+    "_pattern": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expansion"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bracketed"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_pattern_token"
+        }
+      ]
+    },
     "pattern": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "string"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "expansion"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_bracketed"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_pattern_token"
-          }
-        ]
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "^"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "^"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "STRING",
+                      "value": "$"
+                    },
+                    "named": true,
+                    "value": "token"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_pattern"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "$"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_pattern"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     "rule": {
       "type": "SEQ",

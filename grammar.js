@@ -99,7 +99,7 @@ module.exports = grammar({
 
     _bracketed_token: $ => choice($.escaped, token(/[^\]\n]/)),
     _bracketed_tokens: $ => seq(choice("^", $._bracketed_token), repeat(choice("-", $._bracketed_token))),
-    _bracketed: $ => seq("[", optional($._bracketed_tokens), token("]")),
+    bracketed: $ => seq("[", optional($._bracketed_tokens), token("]")),
 
     _pattern_comment: _ => seq("(?#", optional(/[^)]+/), ")"),
 
@@ -112,12 +112,21 @@ module.exports = grammar({
       '"'
     ),
 
-    pattern: $ => repeat1(choice(
+    _pattern: $ => choice(
       $.string,
       $.expansion,
-      $._bracketed,
+      $.bracketed,
       $._pattern_token,
-    )),
+    ),
+
+    pattern: $ => choice(
+      "^",
+      seq(
+        optional("^"),
+        repeat(choice(alias("$", $.token), $._pattern)),
+        choice(choice("$", $._pattern)),
+      ),
+    ),
 
     rule: $ => seq(
       $.pattern,

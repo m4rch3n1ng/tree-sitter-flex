@@ -1,5 +1,20 @@
 [
   {
+    "type": "bracketed",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escaped",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "comment",
     "named": true,
     "fields": {}
@@ -98,6 +113,10 @@
       "required": false,
       "types": [
         {
+          "type": "bracketed",
+          "named": true
+        },
+        {
           "type": "comment",
           "named": true
         },
@@ -111,6 +130,10 @@
         },
         {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "token",
           "named": true
         }
       ]
@@ -200,6 +223,10 @@
     "named": false
   },
   {
+    "type": "$",
+    "named": false
+  },
+  {
     "type": "%%",
     "named": false
   },
@@ -281,6 +308,10 @@
   },
   {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "token",
     "named": true
   },
   {

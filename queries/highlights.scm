@@ -6,10 +6,18 @@
 (condition "*" @string.special)
 
 (pattern) @string.regexp
-(pattern ["+" "*" "?" "|" "^" "-"] @operator)
-(pattern ["[" "]" "{" "}" "(" ")"] @punctuation.bracket)
-(pattern (escaped) @constant.character.escape)
+
+(pattern ["(" ")"] @punctuation.bracket)
+(pattern ["+" "*" "?" "|"] @operator)
+(pattern ["^" "$"] @constant.character.escape)
+
+(pattern (bracketed ["[" "]"] @punctuation.bracket))
+(pattern (bracketed ["^" "-"] @operator))
+
+(pattern (expansion ["{" "}"] @punctuation.bracket))
 (pattern (expansion (identifier) @variable))
+
+(escaped) @constant.character.escape
 
 (string) @string
 

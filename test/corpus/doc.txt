@@ -24,7 +24,8 @@ digit   [0-9]
     (value))
   (definition
     (identifier)
-    (pattern)))
+    (pattern
+      (bracketed))))
 
 ==================
 comments
@@ -68,7 +69,8 @@ digit
   (comment)
   (definition
     (identifier)
-    (pattern))
+    (pattern
+      (bracketed)))
   (prologue
     (embedded_code))
   (directive
@@ -108,8 +110,9 @@ digit
       (escaped)))
   (rule
     (pattern
-      (escaped)
-      (escaped))
+      (bracketed
+        (escaped)
+        (escaped)))
     (embedded_code)))
 
 ==================
@@ -159,7 +162,8 @@ int thing() {
     (value))
   (definition
     (identifier)
-    (pattern))
+    (pattern
+      (bracketed)))
   (prologue
     (embedded_code))
   (directive
@@ -216,13 +220,16 @@ states
   (condition
     (rule
       (pattern
-        (escaped))
+        (bracketed
+          (escaped)))
       (embedded_code)))
   (condition
     (identifier)
     (rule
       (pattern
-        (escaped))
+        (bracketed)
+        (escaped)
+        (bracketed))
       (embedded_code)))
   (condition
     (identifier)
@@ -256,6 +263,7 @@ letter        [a-zA-Z]
                        }
                        return IDENT;      }
 "/*"            BEGIN(IN_COMMENT);
+^{digit}^{digit}|$\.$  /* not even sure */
 
 %%
 
@@ -264,20 +272,26 @@ letter        [a-zA-Z]
 (source_file
   (definition
     (identifier)
-    (pattern))
+    (pattern
+      (bracketed)))
   (definition
     (identifier)
-    (pattern))
+    (pattern
+      (bracketed)))
   (rule
-    (pattern)
+    (pattern
+      (bracketed))
     (embedded_code))
   (rule
     (pattern
-      (escaped))
+      (bracketed)
+      (escaped)
+      (bracketed))
     (embedded_code))
   (rule
     (pattern
-      (escaped))
+      (bracketed
+        (escaped)))
     (embedded_code))
   (rule
     (pattern
@@ -291,6 +305,15 @@ letter        [a-zA-Z]
   (rule
     (pattern
       (string))
+    (embedded_code))
+  (rule
+    (pattern
+      (expansion
+        (identifier))
+      (expansion
+        (identifier))
+      (token)
+      (escaped))
     (embedded_code)))
 
 ==================
@@ -328,7 +351,8 @@ multiline state
       (embedded_code))
     (rule
       (pattern
-        (escaped))
+        (bracketed
+          (escaped)))
       (embedded_code))
     (rule
       (pattern
@@ -354,7 +378,8 @@ digit [0-9]
 (source_file
   (definition
     (identifier)
-    (pattern))
+    (pattern
+      (bracketed)))
   (rule
     (pattern
       (expansion
@@ -374,4 +399,5 @@ digit [0-9]
 (source_file
   (definition
     (identifier)
-    (pattern)))
+    (pattern
+      (bracketed))))
