@@ -177,16 +177,23 @@ module.exports = grammar({
       ),
     ),
 
+    action: $ => choice(
+      seq("|", optional($._whitespace), $._newline),
+      seq($.embedded_code, $._newline),
+    ),
+
     rule: $ => seq(
       $.pattern,
       choice(
-        optional($._whitespace),
+        seq(
+          optional($._whitespace),
+          $._newline,
+        ),
         seq(
           $._whitespace,
-          $.embedded_code
+          $.action,
         ),
       ),
-      $._newline,
     ),
 
     condition: $ => seq(

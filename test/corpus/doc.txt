@@ -92,17 +92,20 @@ digit
   (rule
     (pattern
       (string))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (rule
     (pattern
       (string))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (comment)
   (rule
     (pattern
       (string)
       (comment))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (comment)
   (comment)
   (rule
@@ -113,7 +116,8 @@ digit
       (bracketed
         (escaped)
         (escaped)))
-    (embedded_code)))
+    (action
+      (embedded_code))))
 
 ==================
 embedded_code
@@ -184,11 +188,13 @@ int thing() {
   (rule
     (pattern
       (string))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (rule
     (pattern
       (string))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (embedded_code))
 
 ==================
@@ -225,13 +231,15 @@ states
   (rule
     (pattern
       (string))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (condition
     (rule
       (pattern
         (bracketed
           (escaped)))
-      (embedded_code)))
+      (action
+        (embedded_code))))
   (condition
     (identifier)
     (rule
@@ -239,26 +247,30 @@ states
         (bracketed)
         (escaped)
         (bracketed))
-      (embedded_code)))
+      (action
+        (embedded_code))))
   (condition
     (identifier)
     (identifier)
     (rule
       (pattern
         (escaped))
-      (embedded_code)))
+      (action
+        (embedded_code))))
   (condition
     (identifier)
     (rule
       (pattern
         (string))
-      (embedded_code)))
+      (action
+        (embedded_code))))
   (condition
     (identifier)
     (rule
       (pattern
         (eof))
-      (embedded_code))))
+      (action
+        (embedded_code)))))
 
 ==================
 more complex rules
@@ -280,7 +292,7 @@ letter        [a-zA-Z]
                        return IDENT;      }
 
 "/*"\123|\x2a               BEGIN(IN_COMMENT);
-^{digit}^{digit}|$\.$  /* not even sure */
+^{digit}^{digit}|$\.$  |
 <<EOF>>                /* ignore */
 t{1,}x{2}              ECHO;
 
@@ -300,7 +312,8 @@ t{1,}x{2}              ECHO;
   (rule
     (pattern
       (bracketed))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (rule
     (pattern
       (expansion
@@ -311,17 +324,20 @@ t{1,}x{2}              ECHO;
       (escaped)
       (expansion
         (identifier)))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (rule
     (pattern
       (bracketed
         (escaped)))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (rule
     (pattern
       (string
         (escaped)))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (rule
     (pattern
       (expansion
@@ -330,13 +346,15 @@ t{1,}x{2}              ECHO;
         (identifier))
       (expansion
         (identifier)))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (rule
     (pattern
       (string)
       (escaped)
       (escaped))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (rule
     (pattern
       (expansion
@@ -345,18 +363,20 @@ t{1,}x{2}              ECHO;
         (identifier))
       (token)
       (escaped))
-    (embedded_code))
+    (action))
   (rule
     (pattern
       (eof))
-    (embedded_code))
+    (action
+      (embedded_code)))
   (rule
     (pattern
       (quantifier
         (number))
       (quantifier
         (number)))
-    (embedded_code)))
+    (action
+      (embedded_code))))
 
 ==================
 multiline state
@@ -384,26 +404,31 @@ multiline state
     (rule
       (pattern
         (string))
-      (embedded_code)))
+      (action
+        (embedded_code))))
   (condition
     (identifier)
     (rule
       (pattern
         (string))
-      (embedded_code))
+      (action
+        (embedded_code)))
     (rule
       (pattern
         (bracketed
           (escaped)))
-      (embedded_code))
+      (action
+        (embedded_code)))
     (rule
       (pattern
         (string))
-      (embedded_code))
+      (action
+        (embedded_code)))
     (rule
       (pattern
         (escaped))
-      (embedded_code))))
+      (action
+        (embedded_code)))))
 
 ==================
 incomplete 02

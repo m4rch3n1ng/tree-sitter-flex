@@ -25,6 +25,8 @@
 (string) @string
 (eof) @string.special
 
+(action "|" @punctuation.special)
+
 [
   "%top{"
   "%{"

@@ -1,4 +1,6 @@
 #include "tree_sitter/parser.h"
+#include <stdint.h>
+#include <wctype.h>
 
 enum TokenType {
     EMBEDDED_CODE,
@@ -23,6 +25,15 @@ void tree_sitter_flex_external_scanner_deserialize(void *payload, char *buffer,
 static inline bool scan_embedded_code(TSLexer *lexer) {
     if (lexer->eof(lexer) || lexer->lookahead == '\n') {
         return false;
+    } else if (lexer->lookahead == '|') {
+        lexer->advance(lexer, false);
+        while (iswspace(lexer->lookahead) && lexer->lookahead != '\n') {
+            lexer->advance(lexer, false);
+        }
+
+        if (lexer->lookahead == '\n') {
+            return false;
+        }
     }
 
     while (lexer->lookahead != '\n' && !lexer->eof(lexer)) {

@@ -1,5 +1,20 @@
 [
   {
+    "type": "action",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "embedded_code",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "bracketed",
     "named": true,
     "fields": {},
@@ -191,7 +206,7 @@
       "required": true,
       "types": [
         {
-          "type": "embedded_code",
+          "type": "action",
           "named": true
         },
         {
