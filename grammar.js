@@ -14,12 +14,22 @@ module.exports = grammar({
 
   rules: {
     source_file: $ => seq(
-      optional($._space),
-      optional($._comments),
-      repeat(seq(
-        choice($.directive, $.definition, $.prologue),
-        optional($._space),
-        optional($._comments),
+      repeat(choice(
+        $._newline,
+        seq(
+          $._whitespace,
+          optional($.embedded_code),
+          $._newline
+        ),
+        seq(
+          $.comment,
+          optional($._whitespace),
+          $._newline,
+        ),
+        $.code_block,
+        $.top_block,
+        $.directive,
+        $.definition,
       )),
       optional(seq(
         "%%",
@@ -58,16 +68,28 @@ module.exports = grammar({
     _comments: $ => repeat1(seq($.comment, $._space)),
     _inline_comments: $ => repeat1(seq($.comment, optional($._whitespace))),
 
-    identifier: _ => /\p{XID_Start}\p{XID_Continue}*/,
-    _directive: _ => /%\p{XID_Start}\p{XID_Continue}*/,
+    identifier: _ => /[\p{XID_Start}_][\p{XID_Continue}\-]*/,
+    _directive: _ => /%[\p{XID_Start}_][\p{XID_Continue}\-]*/,
 
-    prologue: $ => seq(
+    code_block: $ => seq(
       "%{",
-      alias($.prologue_body, $.embedded_code),
+      alias($.code_block_body, $.embedded_code),
       "%}"
     ),
 
-    prologue_body: _ => token(/([^%]|%[^}])*/),
+    code_block_body: $ => seq(
+      $._newline,
+      repeat(seq(
+        optional(/([^%]|%[^}]).*/),
+        $._newline,
+      )),
+    ),
+
+    top_block: $ => seq(
+      "%top{",
+      optional(alias(/[^}]+/, $.embedded_code)),
+      "}",
+    ),
 
     directive: $ => seq(
       alias(alias($._directive, $.identifier), $.identifier),

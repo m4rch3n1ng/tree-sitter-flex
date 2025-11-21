@@ -15,6 +15,21 @@
     }
   },
   {
+    "type": "code_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "embedded_code",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "comment",
     "named": true,
     "fields": {}
@@ -85,6 +100,11 @@
     }
   },
   {
+    "type": "embedded_code",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "escaped",
     "named": true,
     "fields": {}
@@ -148,21 +168,6 @@
     }
   },
   {
-    "type": "prologue",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "embedded_code",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "quantifier",
     "named": true,
     "fields": {},
@@ -206,6 +211,10 @@
       "required": false,
       "types": [
         {
+          "type": "code_block",
+          "named": true
+        },
+        {
           "type": "comment",
           "named": true
         },
@@ -226,11 +235,11 @@
           "named": true
         },
         {
-          "type": "prologue",
+          "type": "rule",
           "named": true
         },
         {
-          "type": "rule",
+          "type": "top_block",
           "named": true
         }
       ]
@@ -252,6 +261,21 @@
     }
   },
   {
+    "type": "top_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "embedded_code",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "\"",
     "named": false
   },
@@ -261,6 +285,10 @@
   },
   {
     "type": "%%",
+    "named": false
+  },
+  {
+    "type": "%top{",
     "named": false
   },
   {
@@ -338,10 +366,6 @@
   {
     "type": "^",
     "named": false
-  },
-  {
-    "type": "embedded_code",
-    "named": true
   },
   {
     "type": "eof",

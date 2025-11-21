@@ -17,7 +17,7 @@ digit   [0-9]
 ------------------
 
 (source_file
-  (prologue
+  (code_block
     (embedded_code))
   (directive
     (identifier)
@@ -71,7 +71,7 @@ digit
     (identifier)
     (pattern
       (bracketed)))
-  (prologue
+  (code_block
     (embedded_code))
   (directive
     (identifier)
@@ -123,7 +123,13 @@ embedded_code
 
 %{
 #include "y.tab.h"
+
+char *test = "%}"
 %}
+
+%top{
+#include <stdlib.h>
+}
 
 %e 4000
 digit [0-9]
@@ -155,7 +161,9 @@ int thing() {
   (directive
     (identifier)
     (value))
-  (prologue
+  (code_block
+    (embedded_code))
+  (top_block
     (embedded_code))
   (directive
     (identifier)
@@ -164,7 +172,7 @@ int thing() {
     (identifier)
     (pattern
       (bracketed)))
-  (prologue
+  (code_block
     (embedded_code))
   (directive
     (identifier)
@@ -209,7 +217,7 @@ states
 ------------------
 
 (source_file
-  (prologue
+  (code_block
     (embedded_code))
   (directive
     (identifier)

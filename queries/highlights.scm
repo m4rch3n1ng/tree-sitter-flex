@@ -26,6 +26,7 @@
 (eof) @string.special
 
 [
+  "%top{"
   "%{"
   "%}"
   "{"
