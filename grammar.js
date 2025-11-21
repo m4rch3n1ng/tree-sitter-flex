@@ -115,7 +115,13 @@ module.exports = grammar({
       $._newline,
     ),
 
-    escaped: _ => seq("\\", token(/./)),
+    escaped: _ => seq("\\",
+      choice(
+        /\d{3}|x[0-9a-fA-F]{2}|./,
+        /x[0-9a-fA-F]{2}/,
+        /./
+      ),
+    ),
 
     expansion: $ => seq("{", $.identifier, "}"),
 

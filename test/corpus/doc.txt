@@ -279,7 +279,7 @@ letter        [a-zA-Z]
                        }
                        return IDENT;      }
 
-"/*"                   BEGIN(IN_COMMENT);
+"/*"\123|\x2a               BEGIN(IN_COMMENT);
 ^{digit}^{digit}|$\.$  /* not even sure */
 <<EOF>>                /* ignore */
 t{1,}x{2}              ECHO;
@@ -333,7 +333,9 @@ t{1,}x{2}              ECHO;
     (embedded_code))
   (rule
     (pattern
-      (string))
+      (string)
+      (escaped)
+      (escaped))
     (embedded_code))
   (rule
     (pattern
