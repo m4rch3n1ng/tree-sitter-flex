@@ -14,6 +14,9 @@
 (pattern (bracketed ["[" "]"] @punctuation.bracket))
 (pattern (bracketed ["^" "-"] @operator))
 
+(pattern (bracketed (character_class ["[:" ":]"] @punctuation.bracket)))
+(pattern (bracketed (character_class "^" @operator)))
+
 (pattern (expansion ["{" "}"] @punctuation.bracket))
 (pattern (expansion (identifier) @variable))
 

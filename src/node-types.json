@@ -23,7 +23,26 @@
       "required": false,
       "types": [
         {
+          "type": "character_class",
+          "named": true
+        },
+        {
           "type": "escaped",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "character_class",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -355,6 +374,10 @@
     "named": false
   },
   {
+    "type": ":]",
+    "named": false
+  },
+  {
     "type": "<",
     "named": false
   },
@@ -368,6 +391,10 @@
   },
   {
     "type": "[",
+    "named": false
+  },
+  {
+    "type": "[:",
     "named": false
   },
   {

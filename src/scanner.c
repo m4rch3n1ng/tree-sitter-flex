@@ -4,6 +4,7 @@
 
 enum TokenType {
     EMBEDDED_CODE,
+    CHARACTER_CLASS_START,
     STRING_CONTENT,
     ERROR_SENTINEL,
 };
@@ -64,6 +65,48 @@ static inline bool scan_embedded_code(TSLexer *lexer) {
     return true;
 }
 
+static inline bool isasciilower(uint32_t ch) {
+    return ch >= 'a' && ch <= 'z';
+}
+
+static inline bool scan_character_class_start(TSLexer *lexer) {
+    if (lexer->lookahead != '[') {
+        return false;
+    }
+
+    lexer->advance(lexer, false);
+    if (lexer->lookahead != ':') {
+        return false;
+    }
+
+    lexer->advance(lexer, false);
+    lexer->result_symbol = CHARACTER_CLASS_START;
+    lexer->mark_end(lexer);
+
+    if (lexer->lookahead == '^') {
+        lexer->advance(lexer, false);
+    }
+
+    if (!isasciilower(lexer->lookahead)) {
+        return false;
+    }
+
+    while (isasciilower(lexer->lookahead)) {
+        lexer->advance(lexer, false);
+    }
+
+    if (lexer->lookahead != ':') {
+        return false;
+    }
+
+    lexer->advance(lexer, false);
+    if (lexer->lookahead == ']') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 static inline bool scan_string_content(TSLexer *lexer) {
     // taken from tree-sitter-rust
     bool has_content = false;
@@ -92,6 +135,10 @@ bool tree_sitter_flex_external_scanner_scan(void *payload, TSLexer *lexer,
 
     if (valid_symbols[EMBEDDED_CODE]) {
         return scan_embedded_code(lexer);
+    }
+
+    if (valid_symbols[CHARACTER_CLASS_START]) {
+        return scan_character_class_start(lexer);
     }
 
     if (valid_symbols[STRING_CONTENT]) {

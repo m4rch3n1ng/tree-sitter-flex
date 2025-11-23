@@ -10,7 +10,7 @@
 module.exports = grammar({
   name: "flex",
 
-  externals: $ => [$.embedded_code, $._string_content, $.error_sentinel],
+  externals: $ => [$.embedded_code, $.character_class_start, $._string_content, $.error_sentinel],
 
   rules: {
     source_file: $ => seq(
@@ -128,7 +128,9 @@ module.exports = grammar({
     number: _ => token(/\d+/),
     quantifier: $ => seq("{", $.number, optional(seq(",", optional($.number))), "}"),
 
-    _bracketed_token: $ => choice($.escaped, token(/[^\]\n]/)),
+    character_class: $ => seq(alias($.character_class_start, "[:"), optional("^"), alias(/[a-z]+/, $.identifier), ":]"),
+
+    _bracketed_token: $ => choice($.escaped, $.character_class, token(/[^\]\n]/)),
     _bracketed_tokens: $ => seq(choice("^", $._bracketed_token), repeat(choice("-", $._bracketed_token))),
     bracketed: $ => seq("[", optional($._bracketed_tokens), token("]")),
 

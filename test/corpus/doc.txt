@@ -468,3 +468,65 @@ digit [0-9]
     (identifier)
     (pattern
       (bracketed))))
+
+==================
+pipe | action
+==================
+
+%%
+a        |
+ab       |
+abc      |
+abcd     ECHO; REJECT;
+.|\n     /* eat up any unmatched character */
+
+------------------
+
+(source_file
+  (rule
+    (pattern)
+    (action))
+  (rule
+    (pattern)
+    (action))
+  (rule
+    (pattern)
+    (action))
+  (rule
+    (pattern)
+    (action
+      (embedded_code)))
+  (rule
+    (pattern
+      (escaped))
+    (action
+      (embedded_code))))
+
+=====================
+posix character class
+=====================
+
+%%
+
+[[:alnum:]]   /* */
+[[:^alpha:]]
+[[:]
+
+---------------------
+
+(source_file
+  (rule
+    (pattern
+      (bracketed
+        (character_class
+          (identifier))))
+    (action
+      (embedded_code)))
+  (rule
+    (pattern
+      (bracketed
+        (character_class
+          (identifier)))))
+  (rule
+    (pattern
+      (bracketed))))
