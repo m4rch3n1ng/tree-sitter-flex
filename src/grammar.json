@@ -273,8 +273,20 @@
       ]
     },
     "_whitespace": {
-      "type": "PATTERN",
-      "value": "[ \\t\\r\\v\\f]+"
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": " "
+          },
+          {
+            "type": "STRING",
+            "value": "\t"
+          }
+        ]
+      }
     },
     "_newline": {
       "type": "STRING",

@@ -60,7 +60,7 @@ module.exports = grammar({
       )),
     ),
 
-    _whitespace: _ => /[ \t\r\v\f]+/,
+    _whitespace: _ => repeat1(choice(" ", "\t")),
     _newline: _ => "\n",
     _space: _ => /\s+/,
 
