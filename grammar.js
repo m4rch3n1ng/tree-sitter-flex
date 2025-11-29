@@ -61,7 +61,7 @@ module.exports = grammar({
     ),
 
     _whitespace: _ => /[ \t\r\v\f]+/,
-    _newline: _ => /\n/,
+    _newline: _ => "\n",
     _space: _ => /\s+/,
 
     comment: _ => seq("/*", optional(token(/([^*]|\*[^/])+/)), "*/"),
